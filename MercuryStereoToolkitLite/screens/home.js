@@ -91,6 +91,14 @@ const HomeScreen = ({navigation}) => {
             <Text style={homeStyle.buttonText}>RECIPROCITY (LONG EXPOSURES)</Text>
           </Pressable>
 
+          <Pressable onPress={() => navigation.navigate("FilterScreen")} style={homeStyle.button} accessible={true} accessibilityLabel="Filter Calculator" accessibilityHint="Navigates to the filter calculator screen" accessibilityRole="button">
+			<Image
+              style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
+              source={require('../assets/images/timer.png')}
+            />
+            <Text style={homeStyle.buttonText}>Filter Calculator</Text>
+          </Pressable>
+
           {/* The following two buttons are used to navigate to the separate Reciprocity and Pinhole calculator files*/}
           {/*Button to navigate to the Pinhole Calculator screen*
           <Pressable onPress={() => navigation.navigate("PinholeScreen", {tab: 0})} style={homeStyle.button} accessible={true} accessibilityLabel="Pinhole" accessibilityHint="Navigates to the pinhole calculator screen" accessibilityRole="button">

@@ -20,6 +20,7 @@ import CloseFocusScreen from './screens/closeFocusCalculator';
 import AboutScreen from './screens/about';
 import PinholeScreen from './screens/pinhole';
 import CombinedReciprocityScreen from './screens/reciprocityCombined';
+import FilterScreen from './screens/filter';
 
 
 const Stack = createNativeStackNavigator();
@@ -96,6 +97,10 @@ const App = () => {
           component={AboutScreen}
         />
 
+        <Stack.Screen
+          name="FilterScreen"
+          component={FilterScreen}
+        />
         {/* add more pages here as they're made. Copy and paste, then just change the name and component.*/}
 
       </Stack.Navigator>
