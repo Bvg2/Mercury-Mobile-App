@@ -94,10 +94,11 @@ const HomeScreen = ({navigation}) => {
           <Pressable onPress={() => navigation.navigate("FilterScreen")} style={homeStyle.button} accessible={true} accessibilityLabel="Filter Calculator" accessibilityHint="Navigates to the filter calculator screen" accessibilityRole="button">
 			<Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
-              source={require('../assets/images/timer.png')}
+              source={require('../assets/images/filter.png')}
             />
-            <Text style={homeStyle.buttonText}>Filter Calculator</Text>
+            <Text style={homeStyle.buttonText}>FILTER CALCULATOR</Text>
           </Pressable>
+		//change the MERCUTY LOGO to be a bit to the left iff there is a phone
 
           {/* The following two buttons are used to navigate to the separate Reciprocity and Pinhole calculator files*/}
           {/*Button to navigate to the Pinhole Calculator screen*

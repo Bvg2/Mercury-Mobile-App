@@ -202,7 +202,7 @@ const PinholeScreen = () => {
               value={time}
               placeholder='0'
               defaultValue='0'
-              placeholderTextColor='#FFFFFF'
+              placeholderTextColor='#F2F2F2'
               inputMode='decimal'
               keyboardType='decimal-pad'
               enterKeyHint='done'
@@ -213,6 +213,15 @@ const PinholeScreen = () => {
             /> 
             <Text style={reciprocityStyle.text}> seconds</Text>
           </View>
+
+          <View style={reciprocityStyle.button} accessible={true} accessibilityLabel="Click to show the calculated pinhole data results, will not change to a different screen" accessibilityRole="button">
+                <Button
+                    title= "Calculate pinhole change"
+                    onPress={() =>  calculatePinhole(selectedPinholeSize, selectedFilm, time)}
+                    color="#000000"
+                />
+          </View>
+
             
           {/*Results text*/}
             {result && (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time:  {reciprocityTime} seconds</Text>)}

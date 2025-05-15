@@ -7,6 +7,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import 'react-native-reanimated';
 import { Header } from '@react-navigation/elements';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 // not using most of these but I'm scared to get rid of them
 import { StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, Platform, StatusBar} from 'react-native';
@@ -32,8 +33,10 @@ const HeaderLogo = () => {
         style={{ width: 50, height: 50, alignSelf: 'center'}}
         source={require('./assets/images/mercuryLogoWhiteOnBlack.png')}
       />
+
   )
 }
+
 
 // main app function
 const App = () => {
@@ -107,5 +110,16 @@ const App = () => {
     </NavigationContainer>
   );
 }
+
+const AppStyle = StyleSheet.create({
+	rightAlign: {
+	},
+	midAlign:{
+
+	},
+
+
+
+})
 
 export default App;

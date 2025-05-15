@@ -263,6 +263,15 @@ const CombinedReciprocityScreen = ({route}) => {
             /> 
             <Text style={reciprocityStyle.text}> seconds</Text>
           </View>
+          <View style={reciprocityStyle.button} accessible={true} accessibilityLabel="Click to show the calculated base distance results, will not change to a different screen" accessibilityRole="button">
+	            <Button
+	                title= "Calculate filter change"
+	                onPress={() =>  calculatePinhole(selectedPinholeSize, selectedFilm, time)}
+	                color="#000000"
+	            />
+	        </View>
+
+
             
           {/*Results text*/}
             {result && (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time:  {reciprocityTime} seconds</Text>)}

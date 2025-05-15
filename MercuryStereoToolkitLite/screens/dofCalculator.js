@@ -737,6 +737,6 @@ const dofStyle = StyleSheet.create({
       alignSelf: 'flex-start',
       marginBottom: 12,
     },
-  });
+});
 
 export default DOFScreen;

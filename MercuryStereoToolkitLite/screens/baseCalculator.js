@@ -11,80 +11,32 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 // Dictionary for selecting a lens name from drop down menu, organized by focal length
 // NOTE: SOME OF THESE LENSES AND HOW THEY ARE REFERRED TO IS DIFFERENT FROM THE DOF CALCULATOR. DO NOT COPY AND PASTE BETWEEN THE TWO FILES
-const lensName = [
-    {key:'1', value:'Super-Angulon 47mm f/5.6'},
-    {key:'2', value:'Pinhole 50mm (0.3mm)'},
-    {key:'3', value:'Bronica 50mm f/2.8 MC (ETRS)'},
-    {key:'4', value:'Mamiya Sekor 55mm f/4.5 (TLR)'},
-    {key:'5', value:'Apo-Digitar 60mm f/4'},
-    {key:'6', value:'Pinhole 65mm (0.35mm)'},
-    {key:'7', value:'Mamiya Sekor 65mm f/3.5 (TLR)'},
-    {key:'8', value:'Grandagon 65mm f/4.5'},
-    {key:'9', value:'Angulon 65mm f/6.8'},
-    {key:'10', value:'Super-Angulon 65mm f/8'},
-    {key:'11', value:'Fujinon SW 65mm f/8'},
-    {key:'12', value:'Graflex Optar W.A. 65mm f/6.8'},
-    {key:'13', value:'Super Topcor 65mm f/7'},
-    {key:'14', value:'HR Digiron-W 70mm f/5.6'},
-    {key:'15', value:'Grandagon 75mm f/6.8'},
-    {key:'16', value:'Super-Angulon 75mm f/8'},
-    {key:'17', value:'Fujinon SW 75mm F/8'},
-    {key:'18', value:'Horseman Professional 75mm f/5.6'},
-    {key:'19', value:'Mamiya Sekor 80mm f/2.8 (TLR)'},
-    {key:'20', value:'Heligon 80mm f/2.8'},
-    {key:'21', value:'Apo-Digitar 80mm f/4'},
-    {key:'22', value:'Apo-Digitar 90mm f/4.5'},
-    {key:'23', value:'Angulon 90mm f/6.8'},
-    {key:'24', value:'Tessar 100mm f/3.5'},
-    {key:'25', value:'Nikkor-W 100mm f/5.6'},
-    {key:'26', value:'Apo-Digitar 100mm f/5.6'},
-    {key:'27', value:'Sironar-N 100mm f/5.6'},
-    {key:'28', value:'Symmar-S 100mm f/5.6'},
-    {key:'29', value:'Apo-Symmar 100mm f/5.6'},
-    {key:'30', value:'Trioptar 103mm f/4.5'},
-    {key:'31', value:'Mamiya Sekor 105mm f/3.5 (TLR)'},
-    {key:'32', value:'Apo-Symmar 120mm f/5.6'},
-    {key:'33', value:'Wista ID 130mm f/5.6'},
-    {key:'34', value:'Mamiya Sekor 135mm f/4.5 (TLR)'},
+
+
+const newFocalLenth = [
+    {key:'1', value:'24mm'},
+    {key:'2', value:'25mm'},
+    {key:'3', value:'28mm'},
+    {key:'4', value:'30mm'},
+    {key:'5', value:'35mm'},
+    {key:'6', value:'40mm'},
+    {key:'7', value:'45mm'},
+    {key:'8', value:'50mm'},
+    {key:'9', value:'55mm'},
+    {key:'10', value:'60mm'},
+    {key:'11', value:'65mm'},
+    {key:'12', value:'70mm'},
+    {key:'13', value:'75mm'},
+    {key:'14', value:'80mm'},
+    {key:'15', value:'150mm'},
+    {key:'16', value:'165mm'},
+    {key:'17', value:'180mm'},
+    {key:'18', value:'200mm'},
+    {key:'19', value:'250mm'},
+    {key:'20', value:'300mm'},
 ];
 
-// Array of the lenses with their respective focal lengths (mm)
-const focalLength = [
-    {lens:'Super-Angulon 47mm f/5.6', focal: 24},
-    {lens:'Pinhole 50mm (0.3mm)', focal: 25},
-    {lens:'Bronica 50mm f/2.8 MC (ETRS)', focal: 25},
-    {lens:'Mamiya Sekor 55mm f/4.5 (TLR)', focal: 28},
-    {lens:'Apo-Digitar 60mm f/4', focal: 30},
-    {lens:'Pinhole 65mm (0.35mm)', focal: 35},
-    {lens:'Mamiya Sekor 65mm f/3.5 (TLR)', focal: 35},
-    {lens:'Grandagon 65mm f/4.5', focal: 35},
-    {lens:'Angulon 65mm f/6.8', focal: 35},
-    {lens:'Super-Angulon 65mm f/8', focal: 35},
-    {lens:'Fujinon SW 65mm f/8', focal: 35},
-    {lens:'Graflex Optar W.A. 65mm f/6.8', focal: 35},
-    {lens:'Super Topcor 65mm f/7', focal: 35},
-    {lens:'HR Digiron-W 70mm f/5.6', focal: 40},
-    {lens:'Grandagon 75mm f/6.8', focal: 45},
-    {lens:'Super-Angulon 75mm f/8', focal: 45},
-    {lens:'Fujinon SW 75mm F/8', focal: 45},
-    {lens:'Horseman Professional 75mm f/5.6', focal: 45},
-    {lens:'Mamiya Sekor 80mm f/2.8 (TLR)', focal: 50},
-    {lens:'Heligon 80mm f/2.8', focal: 50},
-    {lens:'Apo-Digitar 80mm f/4', focal: 50},
-    {lens:'Apo-Digitar 90mm f/4.5', focalz: 55},
-    {lens:'Angulon 90mm f/6.8', focal: 55},
-    {lens:'Tessar 100mm f/3.5', focal: 60},
-    {lens:'Nikkor-W 100mm f/5.6', focal: 60},
-    {lens:'Apo-Digitar 100mm f/5.6', focal: 60},
-    {lens:'Sironar-N 100mm f/5.6', focal: 60},
-    {lens:'Symmar-S 100mm f/5.6', focal: 60},
-    {lens:'Apo-Symmar 100mm f/5.6', focal: 60},
-    {lens:'Trioptar 103mm f/4.5', focal: 60},
-    {lens:'Mamiya Sekor 105mm f/3.5 (TLR)', focal: 60},
-    {lens:'Apo-Symmar 120mm f/5.6', focal: 70},
-    {lens:'Wista ID 130mm f/5.6', focal: 75},
-    {lens:'Mamiya Sekor 135mm f/4.5 (TLR)', focal: 80},
-]
+
 
 // Default base distance value; used for results
 var baseDist = 0;
@@ -215,13 +167,13 @@ const BaseScreen = () => {
             l = parseFloat(farDist);
         }
 
-        let f = 0;      // Create focal distance variable
         // Use the selected lens to assign the correct focal distance
-        for (let i = 0; i < focalLength.length; i ++){
-            if(focalLength[i].lens.localeCompare(selectedLens) == 0){
-                f = parseInt(focalLength[i].focal);
-            }
-        }
+
+        //return here 1
+        const f = parseInt(selectedLens);
+        //B: f is now just the parsed in of the mm focal length
+
+
 
         // Convert distances to millimeters to use in calculation
         /* I couldn't find anywhere that confirmed that this was the correct thing to do, but given that the focal length
@@ -325,10 +277,10 @@ const BaseScreen = () => {
                 </Text>
 
                 {/*Dropdown menu to select the lens (will determine the focal length for calculations*/}
-                <Text style={baseStyle.text} accessible={true} accessibilityLabel="Select lens" accessibilityRole="text">Select lens:</Text>
+                <Text style={baseStyle.text} accessible={true} accessibilityLabel="Select Focal Length" accessibilityRole="text">Select Focal Length:</Text>
                 <SelectList 
                     setSelected={(val) => setSelectedLens(val)}
-                    data= {lensName}
+                    data= {newFocalLenth}
                     save="value"
                     boxStyles={{marginBottom:12}}
                     dropdownTextStyles={{color:'white'}}
