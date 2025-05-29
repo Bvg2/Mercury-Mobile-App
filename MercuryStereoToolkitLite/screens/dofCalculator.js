@@ -5,12 +5,14 @@
 // ALSO HAVE CALRIFY ABOUT USING THE BASE DURING HYPERFOCAL CALCULATION FOR LENSES WITHOUT SPACERS
 
 import * as React from 'react';
-import { StyleSheet, View , Text, SafeAreaView, Button, ScrollView } from 'react-native';
+import { StyleSheet, View , Text, Image, Pressable, SafeAreaView, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import RadioGroup from 'react-native-radio-buttons-group';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 //All lens data, sorted by focal length
 const lensData = [
@@ -90,6 +92,16 @@ const fStops = [
     {key:'3', value:'F-8'},
 ];
 
+const BackArrow = () => {
+  return (
+      <Image
+        style={{ width: 18, height: 18, alignSelf: 'left'}}
+        source={require('../assets/images/backarrow.png')}
+      />
+
+  )
+}
+
 
 // Arrays of data pulled from lensData based on the lens name that is selected -- used in further calculations for results.
 var baseArray = [];
@@ -129,6 +141,7 @@ var displayUnits = "";
 // DOF screen of app -- the return of this component is what is exported
 const DOFScreen = ({route}) => {
 
+  const navigation = useNavigation();
   // Reference to use to automatically scroll down to see results
   const endRef = React.useRef();
 
@@ -532,10 +545,13 @@ const DOFScreen = ({route}) => {
     // The return statement contains the contents displayed on the screen that the user interacts with  
     return(
       <SafeAreaView style={dofStyle.container}>
+        <Pressable style={dofStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+			<BackArrow/>
+        </Pressable>
         <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })}>
           {/*Page titles -- the one displayed depends on the value of the state variable controlled by the segmented control tab*/}
-          {selectedIndex == 1 &&(<Text style={dofStyle.textTitle} accessible={true} accessibilityLabel="Depth of field" accessibilityRole="text">Depth of Field</Text>)}
-          {selectedIndex == 0 &&(<Text style={dofStyle.textTitle} accessible={true} accessibilityLabel="Hyperfocal" accessibilityRole="text">Hyperfocal</Text>)}
+          {selectedIndex == 1 ? (<Text style={dofStyle.textTitle} accessible={true} accessibilityLabel="Depth of field" accessibilityRole="text">Depth of Field</Text>) : null}
+          {selectedIndex == 0 ? (<Text style={dofStyle.textTitle} accessible={true} accessibilityLabel="Hyperfocal" accessibilityRole="text">Hyperfocal</Text>) : null}
 
           {/*Subtitle text to be shown on both tabs*/}
           <Text style={dofStyle.textSubtitle} accessible={true} accessibilityLabel="For Mercury Stereo Cameras" accessibilityRole="text">For Mercury Stereo Cameras</Text>
@@ -585,8 +601,8 @@ const DOFScreen = ({route}) => {
           />
     
     {/*Dropdown menu for selecting which base is being used*/}
-          {selectedIndex==1 && (<Text style={dofStyle.text} accessible={true} accessibilityLabel="Select base spacer" accessibilityRole="text">Select base spacer:</Text>)}
-          {selectedIndex==1 && (<SelectList 
+          {selectedIndex==1 ? (<Text style={dofStyle.text} accessible={true} accessibilityLabel="Select base spacer" accessibilityRole="text">Select base spacer:</Text>) : null}
+          {selectedIndex==1 ? (<SelectList
             setSelected={(val) => setSelectedBase(val)} // update the state variable
             data= {baseOptions}
             save="value"
@@ -596,11 +612,11 @@ const DOFScreen = ({route}) => {
             inputStyles={{color:'white'}}
             accessible={true}
             accessibilityHint="A searchable drop down menu to select a base spacer option"
-          />)}
+          />) : null}
     
       {/*Dropdown menu for selecting which spacer is being used*/}
-          {selectedIndex==1 && (<Text style={dofStyle.text} accessible={true} accessibilityLabel="Select focal spacer" accessibilityRole="text">Select focal spacer:</Text>)}
-          {selectedIndex==1 && (<SelectList
+          {selectedIndex==1 ? (<Text style={dofStyle.text} accessible={true} accessibilityLabel="Select focal spacer" accessibilityRole="text">Select focal spacer:</Text>) : null}
+          {selectedIndex==1 ? (<SelectList
             setSelected={(val) => setSelectedSpacer(val)} // update the state variable
             data= {spacerOptions}
             save="value"
@@ -610,11 +626,11 @@ const DOFScreen = ({route}) => {
             inputStyles={{color:'white'}}
             accessible={true}
             accessibilityHint="A searchable drop down menu to select a focal spacer option"
-          />)}
+          />) : null}
     
       {/*Dropdown menu for selesting f-stop for hyperfocal*/}
-          {selectedIndex==0 && (<Text style={dofStyle.text} accessible={true} accessibilityLabel="Select f-stop" accessibilityRole="text">Select f-stop:</Text>)}
-          {selectedIndex==0 && (<SelectList
+          {selectedIndex==0 ? (<Text style={dofStyle.text} accessible={true} accessibilityLabel="Select f-stop" accessibilityRole="text">Select f-stop:</Text>) : null}
+          {selectedIndex==0 ? (<SelectList
             setSelected={(val) => setSelectedFStop(val)} // update state variable 
             data={fStops}
             save="value"
@@ -623,32 +639,32 @@ const DOFScreen = ({route}) => {
             inputStyles={{color:'white'}}
             accessible={true}
             accessibilityHint="A searchable drop down menu to select an F-stop option"
-          />)}
+          />) : null}
     
     
       {/*Button displayed when on the DOF tab, when pressed it executes the calculateDOF() function and displays the results*/}
-          {selectedIndex==1 && (<View style={dofStyle.button} accessible={true} accessibilityLabel="Calculate depth of field" accessibilityHint="Press to show the results of the DOF calculation, will not switch to a different screen" accessibilityRole="button">
-            {selectedIndex==1 && (<Button 
+          {selectedIndex==1 ? (<View style={dofStyle.button} accessible={true} accessibilityLabel="Calculate depth of field" accessibilityHint="Press to show the results of the DOF calculation, will not switch to a different screen" accessibilityRole="button">
+            {selectedIndex==1 ? (<Button
               title= "Calculate DOF"
               onPress={() => calculateDOF()}
               color="#000000"
-            />)}
-          </View>)}
+            />) : null}
+          </View>) : null}
     
      {/*Button displayed when on the hyperfocal tab, when pressed it executes the calculateHyperfocal() function and displays the results*/}
-          {selectedIndex==0 && (<View style={dofStyle.button} accessible={true} accessibilityLabel="Calculate hyperfocal" accessibilityHint="Press to show the results of the hyperfocal calculation, will not switch to a different screen" accessibilityRole="button">
-            {selectedIndex==0 && (<Button 
+          {selectedIndex==0 ? (<View style={dofStyle.button} accessible={true} accessibilityLabel="Calculate hyperfocal" accessibilityHint="Press to show the results of the hyperfocal calculation, will not switch to a different screen" accessibilityRole="button">
+            {selectedIndex==0 ? (<Button
               title= "Calculate Hyperfocal"
               onPress={() => calculateHyperfocal()}
               color="#000000"
-            />)}
-          </View>)}
+            />) : null}
+          </View>) : null}
 
       {/*Results for both DOF and Hyperfocal -- will be displayed when their respective tab has been selected and their respective showResults variable has been set to true.*/}
 
           {/*Group of radio buttons to select the units that results will be displayed in */}
-          {(showDOFResult || showHyperfocalResult) && (<Text style={dofStyle.text} accessible={true} accesssibilityLabel="Select units" accessibilityRole="text">Select units:</Text>)}
-          {(showDOFResult || showHyperfocalResult) && (<RadioGroup 
+          {(showDOFResult || showHyperfocalResult) ? (<Text style={dofStyle.text} accessible={true} accesssibilityLabel="Select units" accessibilityRole="text">Select units:</Text>) : null}
+          {(showDOFResult || showHyperfocalResult) ? (<RadioGroup
               radioButtons={unitsRadioButtons} 
               onPress={handleUnits}
               //onPress={setSelectedUnits}
@@ -657,22 +673,22 @@ const DOFScreen = ({route}) => {
               accessible={true}
               accessibilityRole="radiogroup"
               layout="row"
-          />)}
+          />) : null}
 
           {/*DOF Results */}
-          {selectedIndex==1 && showDOFResult && (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="F-22 depth of field result" accessibilityRole="text">F-22 DOF:  {f22Response} {displayUnits}</Text>)}
-          {selectedIndex==1 && showDOFResult && (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="F-16 depth of field result" accessibilityRole="text">F-16 DOF:  {f16Response} {displayUnits}</Text>)}
-          {selectedIndex==1 && showDOFResult && (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="F-8 depth of field result" accessibilityRole="text">F-8 DOF:  {f8Response} {displayUnits}</Text>)}
+          {(selectedIndex==1 && showDOFResult) ? (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="F-22 depth of field result" accessibilityRole="text">F-22 DOF:  {f22Response} {displayUnits}</Text>) : null}
+          {(selectedIndex==1 && showDOFResult) ? (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="F-16 depth of field result" accessibilityRole="text">F-16 DOF:  {f16Response} {displayUnits}</Text>) : null}
+          {(selectedIndex==1 && showDOFResult) ? (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="F-8 depth of field result" accessibilityRole="text">F-8 DOF:  {f8Response} {displayUnits}</Text>) : null}
     
-          {selectedIndex==1 && showDOFResult && (<Text style={dofStyle.textResult}>-------------------------------------</Text>)}
+          {(selectedIndex==1 && showDOFResult) ? (<Text style={dofStyle.textResult}>-------------------------------------</Text>) : null}
 
-          {selectedIndex==1 && showDOFResult && (<Text style={dofStyle.textResult} accessible={true} accesibilityLabel="Bolts result" accessibiltyRole="text">Bolts:  {boltResponse}</Text>)}
-          {selectedIndex==1 && showDOFResult && (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="Focal distance result" accessibilityRole="text">Focal Distance:  {subjectDistResponse} {displayUnits}</Text>)}
+          {(selectedIndex==1 && showDOFResult) ? (<Text style={dofStyle.textResult} accessible={true} accesibilityLabel="Bolts result" accessibiltyRole="text">Bolts:  {boltResponse}</Text>) : null}
+          {(selectedIndex==1 && showDOFResult) ? (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="Focal distance result" accessibilityRole="text">Focal Distance:  {subjectDistResponse} {displayUnits}</Text>) : null}
 
           {/*Hyperfocal Results */}
-          {selectedIndex==0 && showHyperfocalResult && (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="Hyperfocal distance result" accessibilityRole="text">Hyperfocal Distance:  {hyperfocal} {displayUnits}</Text>)}
-          {selectedIndex==0 && showHyperfocalResult && (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="Base spacer result" accessibilityRole="text">Base spacer:  {hyperfocalBase}</Text>)}
-          {selectedIndex==0 && showHyperfocalResult && (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="Focal spacer result" accessibilityRole="text">Focal spacer:  {hyperfocalSpacer}</Text>)}
+          {(selectedIndex==0 && showHyperfocalResult) ? (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="Hyperfocal distance result" accessibilityRole="text">Hyperfocal Distance:  {hyperfocal} {displayUnits}</Text>) : null}
+          {(selectedIndex==0 && showHyperfocalResult) ? (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="Base spacer result" accessibilityRole="text">Base spacer:  {hyperfocalBase}</Text>) : null}
+          {(selectedIndex==0 && showHyperfocalResult) ? (<Text style={dofStyle.textResult} accessible={true} accessibilityLabel="Focal spacer result" accessibilityRole="text">Focal spacer:  {hyperfocalSpacer}</Text>) : null}
 
         </ScrollView>
       </SafeAreaView>
@@ -690,10 +706,15 @@ const dofStyle = StyleSheet.create({
       backgroundColor: 'black',
       justifyContent: 'tops',
     },
+    backArrow: {
+		color: 'white',
+		marginTop: 55,
+		margin: 10,
+	},
     // Title text of page
     textTitle: {
       color: 'white',
-      marginTop: 55,
+      marginTop: 0,
       margin: 5,
       fontSize: 35,
       textAlign: 'center',

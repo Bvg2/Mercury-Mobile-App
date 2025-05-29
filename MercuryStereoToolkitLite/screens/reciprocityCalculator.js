@@ -1,7 +1,7 @@
 // See README.md for information about this file and how to make updates
 
 import * as React from 'react';
-import { StyleSheet, View , Text, SafeAreaView, TextInput, Button, ScrollView } from 'react-native';
+import { StyleSheet, View , Text, SafeAreaView, Pressable, TextInput, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
@@ -22,6 +22,15 @@ const filmStock = [
     {key: '10', value: 'Ilford Delta 400'}
 ];
 
+const BackArrow = () => {
+  return (
+      <Image
+        style={{ width: 18, height: 18, alignSelf: 'left'}}
+        source={require('../assets/images/backarrow.png')}
+      />
+
+  )
+}
 
 // Global variable which stores the calculated reciprocity time, based on the selected film stock
 var reciprocityTime = 0;
@@ -141,6 +150,9 @@ const ReciprocityScreen = () => {
 
     return (
       <SafeAreaView style={[(timerEnd == false) ? reciprocityStyle.containerRegular : reciprocityStyle.containerTimerEnd]}>
+      <Pressable style={filterStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+        <BackArrow/>
+      </Pressable>
         <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })}>
           {/*Page title*/}
             <Text style={reciprocityStyle.textTitle} accessible={true} accessibilityLabel="Reciprocity" accessibilityRole="text">Reciprocity</Text>

@@ -1,7 +1,7 @@
 // See README.md for information about this file and how to make updates
 
 import * as React from 'react';
-import { StyleSheet, View , Text, SafeAreaView, TextInput, Button, ScrollView } from 'react-native';
+import { StyleSheet, View , Text, SafeAreaView, Pressable, Image, TextInput, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
@@ -9,6 +9,8 @@ import { SelectList } from 'react-native-dropdown-select-list';
 //import { Audio } from 'expo-av';
 
 import SegmentedControlTab from "react-native-segmented-control-tab";
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 
 // Array/dictionary of key value pairs of different film stock for use in the dropdown menu
@@ -31,6 +33,16 @@ const pinholeSize = [
   {key: '2', value: '0.35mm diameter / 70mm FL'}
 ];
 
+const BackArrow = () => {
+  return (
+      <Image
+        style={{ width: 18, height: 18, alignSelf: 'left'}}
+        source={require('../assets/images/backarrow.png')}
+      />
+
+  )
+}
+
 // Global variable which stores the calculated reciprocity time, based on the selected film stock
 var reciprocityTime = 0;
 // Separate global variable which is used to pass the calculated reicprocity time to the timer... honestly I don't remember by just using reciprocityTime wasn't working, but it wasn't for some reason so idk
@@ -38,7 +50,7 @@ var reciprocityTime = 0;
 
 // Screen component
 const CombinedReciprocityScreen = ({route}) => {
-
+	const navigation = useNavigation();
   // Reference to use to automatically scroll down to see results
     const endRef = React.useRef();
 
@@ -171,11 +183,14 @@ const CombinedReciprocityScreen = ({route}) => {
 
     return (
       <SafeAreaView style={[(timerEnd == false) ? reciprocityStyle.containerRegular : reciprocityStyle.containerTimerEnd]}>
+        <Pressable style={reciprocityStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+         <BackArrow/>
+        </Pressable>
         <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })}>
             
             {/*Title*/}
-            {selectedIndex == 0 &&(<Text style={reciprocityStyle.textTitle} accessible={true} accessibilityLabel="Pinhole" accessibilityRole="text">Pinhole</Text>)}
-            {selectedIndex == 1 &&(<Text style={reciprocityStyle.textTitle} accessible={true} accessibilityLabel="Reciprocity Only" accessibilityRole="text">Reciprocity Only</Text>)}
+            {selectedIndex == 0 ? (<Text style={reciprocityStyle.textTitle} accessible={true} accessibilityLabel="Pinhole" accessibilityRole="text">Pinhole</Text>) : null}
+            {selectedIndex == 1 ? (<Text style={reciprocityStyle.textTitle} accessible={true} accessibilityLabel="Reciprocity Only" accessibilityRole="text">Reciprocity Only</Text>) : null}
 
             {/*Segmented control tab for selecting what fields will be shown based on what the desired calculation is*/}
             <SegmentedControlTab
@@ -208,16 +223,16 @@ const CombinedReciprocityScreen = ({route}) => {
            />
 
           {/*Instructions*/}
-            {selectedIndex == 0 &&(<Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="Meter for f/22.  Select your pinhole size, film stock, and the exposure time your meter calculates, and we will calculate your actual exposure time (taking into account your pinhole and film reciprocity)." accessibilityRole="text">
+            {selectedIndex == 0 ? (<Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="Meter for f/22.  Select your pinhole size, film stock, and the exposure time your meter calculates, and we will calculate your actual exposure time (taking into account your pinhole and film reciprocity)." accessibilityRole="text">
                 Meter for f/22. Select your pinhole size, film stock, and the exposure time your meter calculates, and we will calculate your actual exposure time (taking into account your pinhole and film reciprocity).
-            </Text>)}
-            {selectedIndex == 1 &&(<Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="When shooting long exposures (over 1 second), use this calculator to convert your metered exposure to the actual exposure time required by your film stock." accessibilityRole="text">
+            </Text>) : null}
+            {selectedIndex == 1 ? (<Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="When shooting long exposures (over 1 second), use this calculator to convert your metered exposure to the actual exposure time required by your film stock." accessibilityRole="text">
                 When shooting long exposures (over 1 second), use this calculator to convert your metered exposure to the actual exposure time required by your film stock.
-            </Text>)}
+            </Text>) : null}
 
           {/*Dropdown menu for selecting pinhole size to use in calculation*/}
-            {selectedIndex == 0 &&(<Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="Select pinhole size" accessibilityRole="text">Select pinhole size:</Text>)}
-            {selectedIndex == 0 &&(<SelectList
+            {selectedIndex == 0 ? (<Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="Select pinhole size" accessibilityRole="text">Select pinhole size:</Text>) : null}
+            {selectedIndex == 0 ? (<SelectList
               setSelected={(val) => setSelectedPinholeSize(val)} // updates state variable
               data={pinholeSize}
               save="value"
@@ -227,7 +242,7 @@ const CombinedReciprocityScreen = ({route}) => {
               onSelect = {() => setTimerEnd(false)}
               accessible={true}
               accessibilityHint="A searchable drop down menu to select a pinhole size option"
-            />)}
+            />) : null}
 
           {/*Dropdown menu for selecting film stock to use in calculation*/}
             <Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="Select film stock" accessibilityRole="text">Select film stock:</Text>
@@ -274,7 +289,7 @@ const CombinedReciprocityScreen = ({route}) => {
 
             
           {/*Results text*/}
-            {result && (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time:  {reciprocityTime} seconds</Text>)}
+            {result ? (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time:  {reciprocityTime} seconds</Text>) : null}
 
       {/*
           {/*Countdown timer
@@ -328,6 +343,11 @@ const reciprocityStyle = StyleSheet.create({
       backgroundColor: '#bd1004',
       justifyContent: 'top',
     },
+    backArrow: {
+		color: 'white',
+		marginTop: 55,
+		margin: 10,
+	},
     contentBlock: {
       flex: .2,
       flexDirection: 'row',
@@ -336,11 +356,12 @@ const reciprocityStyle = StyleSheet.create({
     // Title text of page
     textTitle: {
       color: 'white',
-      marginTop: 55,
+      marginTop: 0,
       margin: 5,
       fontSize: 35,
       textAlign: 'center',
       fontWeight: 'bold',
+
       },
     text: {
       color: 'white',

@@ -37,25 +37,25 @@ const HomeScreen = ({navigation}) => {
           <Text style={homeStyle.textTitle} accessible={true} accessibilityLabel="Mercury Stereo Toolkit" accessibilityRole="text">Mercury Stereo Toolkit</Text>
           
           {/*Button to navigate to the Hyperfocal tab on the DOF screen*/}
-          <Pressable onPress={() => navigation.navigate("DOFScreen", {tab: 0})} style={homeStyle.button} accessible={true} accessibilityLabel="Hyperfocal" accessibilityHint="Navigates to the hyperfocal calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("DOFScreen", {tab: 0})} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Hyperfocal" accessibilityHint="Navigates to the hyperfocal calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
-              source={require('../assets/images/mercuryLogoBlackOnWhite.png')}
+              source={require('../assets/images/blackOnNothing.png')}
             />
             <Text style={homeStyle.buttonText}>HYPERFOCAL</Text>
           </Pressable>
           
           {/*Button to navigate to the DOF tab on the DOF screen*/}
-          <Pressable onPress={() => navigation.navigate("DOFScreen", {tab: 1})} style={homeStyle.button} accessible={true} accessibilityLabel="Depth of field" accessibilityHint="Navigates to the depth of field calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("DOFScreen", {tab: 1})} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Depth of field" accessibilityHint="Navigates to the depth of field calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
-              source={require('../assets/images/mercuryLogoBlackOnWhite.png')}
+              source={require('../assets/images/blackOnNothing.png')}
             />
             <Text style={homeStyle.buttonText}>DEPTH OF FIELD</Text>
           </Pressable>
 
           {/*Button to navigate to the Close Focus Calculator screen*/}
-          <Pressable onPress={() => navigation.navigate("CloseFocusScreen")} style={homeStyle.button} accessible={true} accessibilityLabel="Depth range (close up)" accessibilityHint="Navigates to the close focus calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("CloseFocusScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Depth range (close up)" accessibilityHint="Navigates to the close focus calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/ruler.png')}
@@ -64,7 +64,7 @@ const HomeScreen = ({navigation}) => {
           </Pressable>
 
           {/*Button to navigate to the Base Distance Calculator screen*/}
-          <Pressable onPress={() => navigation.navigate("BaseScreen")}style={homeStyle.button} accessible={true} accessibilityLabel="Base distance (hypo/hyper)" accessibilityHint="Navigates to the base distance calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("BaseScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Base distance (hypo/hyper)" accessibilityHint="Navigates to the base distance calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/base.png')}
@@ -73,7 +73,7 @@ const HomeScreen = ({navigation}) => {
           </Pressable>
 
           {/*Button to navigate to the Pinhole tab on the Reciprocity Calculator screen*/}
-          <Pressable onPress={() => navigation.navigate("CombinedReciprocityScreen", {tab: 0})} style={homeStyle.button} accessible={true} accessibilityLabel="Pinhole" accessibilityHint="Navigates to the pinhole calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("CombinedReciprocityScreen", {tab: 0})} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Pinhole" accessibilityHint="Navigates to the pinhole calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/timer.png')}
@@ -83,7 +83,7 @@ const HomeScreen = ({navigation}) => {
     
 
           {/*Button to navigate to the Reciprocity Only tab on the Reciprocity Calculator screen*/}
-          <Pressable onPress={() => navigation.navigate("CombinedReciprocityScreen", {tab: 1})} style={homeStyle.button} accessible={true} accessibilityLabel="Reciprocity (long exposures)" accessibilityHint="Navigates to the reciprocity only calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("CombinedReciprocityScreen", {tab: 1})} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Reciprocity (long exposures)" accessibilityHint="Navigates to the reciprocity only calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/timer.png')}
@@ -91,7 +91,7 @@ const HomeScreen = ({navigation}) => {
             <Text style={homeStyle.buttonText}>RECIPROCITY (LONG EXPOSURES)</Text>
           </Pressable>
 
-          <Pressable onPress={() => navigation.navigate("FilterScreen")} style={homeStyle.button} accessible={true} accessibilityLabel="Filter Calculator" accessibilityHint="Navigates to the filter calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("FilterScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Filter Calculator" accessibilityHint="Navigates to the filter calculator screen" accessibilityRole="button">
 			<Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/filter.png')}
@@ -122,14 +122,39 @@ const HomeScreen = ({navigation}) => {
           */}
 
 
+
           {/*Button to navigate to the Stereo System User Guide screen*/}
-          <OpenURLLink url={userGuideURL}>MERCURY STEREO USER GUIDE (LINK)</OpenURLLink>
+          {/* user guide<OpenURLLink url={userGuideURL}>MERCURY STEREO USER GUIDE (LINK)</OpenURLLink>*/}
+		  <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+	          <View style={{marginTop: 10, width: 100, flexDirection:'column', marginLeft:15}}>
+	            <Pressable onPress={() => navigation.navigate("AboutScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.smallButton,]} accessible={true} accessibilityLabel="userGuide" accessibilityHint="Navigates to the userGuide screen" accessibilityRole="button">
+					<Image
+	                 style={{ width: 35, height: 35, alignSelf: 'center'}}
+	                 source={require('../assets/images/info.png')}
+	                />
+
+
+	            </Pressable>
+	            <Text style={[homeStyle.text, {marginTop: 5, textAlign:'center', alignSelf:'center'}]}>ABOUT</Text>
+	          </View>
+
+
+	          <View style={{marginTop: 10, width: 100, flexDirection:'column', marginRight:15}}>
+	            <Pressable onPress={() => navigation.navigate("ManualScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.smallButton,]} accessible={true} accessibilityLabel="userGuide" accessibilityHint="Navigates to the userGuide screen" accessibilityRole="button">
+					<Image
+	                 style={{ width: 50, height: 50, alignSelf: 'center'}}
+	                 source={require('../assets/images/manual.png')}
+	                />
+
+
+	            </Pressable>
+	            <Text style={[homeStyle.text, {marginTop: 5, textAlign:'center', alignSelf:'center'}]}>MANUAL</Text>
+	          </View>
+          </View>
 
 
           {/*Button to navigate to the About screen*/}
-          <Pressable onPress={() => navigation.navigate("AboutScreen")} style={homeStyle.buttonAbout} accessible={true} accessibilityLabel="About" accessibilityHint="Navigates to the about screen" accessibilityRole="button">
-            <Text style={homeStyle.buttonTextAbout}>ABOUT</Text>
-          </Pressable>
+
 
           {/*Add new buttons here as new screens are created!*/}
 
@@ -177,7 +202,6 @@ const HomeScreen = ({navigation}) => {
     },
     // Styling the Pressable component, functions as a button but it has more styling options
     button: {
-      backgroundColor: 'white',
       padding: 5,
       margin: 20,
       borderRadius: 10,
@@ -189,6 +213,19 @@ const HomeScreen = ({navigation}) => {
       flex: 1,
       flexDirection: 'row',
     },
+    smallButton: {
+      padding: 5,
+      marginTop: 20,
+      marginLeft: 20,
+      borderRadius: 40,
+      height: 65,
+      width: 65,
+      alignSelf: 'left',
+      display: 'flex',
+      justifyContent: 'center',
+      flex: 1,
+    },
+
     buttonAbout: {
       height: 50,
       width: '90%',
@@ -204,6 +241,7 @@ const HomeScreen = ({navigation}) => {
     },
     buttonTextAbout: {
       alignSelf: 'center',
+	  backgroundColor: 'white',
       fontSize: 18,
       color: '#007AFF',
       textAlign: 'center',

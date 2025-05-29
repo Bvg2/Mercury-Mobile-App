@@ -224,7 +224,7 @@ const PinholeScreen = () => {
 
             
           {/*Results text*/}
-            {result && (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time:  {reciprocityTime} seconds</Text>)}
+            {result ? (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time:  {reciprocityTime} seconds</Text>) : null}
 
       {/*
           {/*Countdown timer

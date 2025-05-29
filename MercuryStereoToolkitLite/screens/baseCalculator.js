@@ -1,13 +1,14 @@
 // See README.md for information about this file and how to make updates
 
 import * as React from 'react';
-import { StyleSheet, View , Text, SafeAreaView, TextInput, Button, ScrollView, Platform } from 'react-native';
+import { StyleSheet, View , Text, Image, Pressable, SafeAreaView, TextInput, Button, ScrollView, Platform } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
 import RadioGroup from 'react-native-radio-buttons-group';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 // Dictionary for selecting a lens name from drop down menu, organized by focal length
 // NOTE: SOME OF THESE LENSES AND HOW THEY ARE REFERRED TO IS DIFFERENT FROM THE DOF CALCULATOR. DO NOT COPY AND PASTE BETWEEN THE TWO FILES
@@ -36,6 +37,16 @@ const newFocalLenth = [
     {key:'20', value:'300mm'},
 ];
 
+const BackArrow = () => {
+  return (
+      <Image
+        style={{ width: 18, height: 18, alignSelf: 'left'}}
+        source={require('../assets/images/backarrow.png')}
+      />
+
+  )
+}
+
 
 
 // Default base distance value; used for results
@@ -46,7 +57,7 @@ var displayUnits = "mm";
 
 // Exported component
 const BaseScreen = () => {
-
+	const navigation = useNavigation();
     // Reference to use to automatically scroll down to see results
     const endRef = React.useRef();
 
@@ -258,6 +269,10 @@ const BaseScreen = () => {
 
     return (
         <SafeAreaView style={baseStyle.container}>
+	        <Pressable style={baseStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+				<BackArrow/>
+	        </Pressable>
+
             {/*Use KeyboardAware because there are some text inputs where the keyboard would otherwise cover the input */}
             <KeyboardAwareScrollView 
                 ref={endRef} 
@@ -360,7 +375,7 @@ const BaseScreen = () => {
                 </View>
 
                 {/*Results -- currently they appear just off-screen when they are calculated, may want to update some spacing to make it more clear that a user must scroll to see them?*/}
-                {showResults && (<Text style={baseStyle.textResult} accessible={true} accessibilityLabel="stereo base results" accessibilityRole="text">Stereo base: {baseDist} {displayUnits}</Text>)}
+                {showResults ? (<Text style={baseStyle.textResult} accessible={true} accessibilityLabel="stereo base results" accessibilityRole="text">Stereo base: {baseDist} {displayUnits}</Text>) : null}
 
             </KeyboardAwareScrollView>
         </SafeAreaView>
@@ -381,7 +396,7 @@ const baseStyle = StyleSheet.create({
     },
     textTitle: {
         color: 'white',
-        marginTop: 55,
+        marginTop: 0,
         margin: 5,
         fontSize: 35,
         textAlign: 'center',
@@ -396,6 +411,11 @@ const baseStyle = StyleSheet.create({
       textAlign: 'left',
       alignSelf: 'flex-start',
     },
+	backArrow: {
+		color: 'white',
+		marginTop: 55,
+		margin: 10,
+	},
     textResult: {
         color: 'red',
         margin: 8,

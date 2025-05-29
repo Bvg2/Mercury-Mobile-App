@@ -1,8 +1,9 @@
 // See README.md for information about this file and how to make updates
 
 import * as React from 'react';
-import { StyleSheet, Text, View, Button, SafeAreaView, Linking, Alert} from 'react-native';
-
+import { StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, Linking, Alert} from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 
 const mercuryStereoURL = 'https://www.mercurystereo.com';
@@ -42,14 +43,29 @@ const OpenURLButton = ({url, children}) => {
   return <Button color="black" title={children} onPress={handlePress} />;
 };
 
+const BackArrow = () => {
+  return (
+      <Image
+        style={{ width: 18, height: 18, alignSelf: 'left'}}
+        source={require('../assets/images/backarrow.png')}
+      />
+
+  )
+}
+
 
 // About screen of app
 const AboutScreen = () => {
+
+	const navigation = useNavigation();
+
     return(
         <SafeAreaView style={aboutStyle.container}>
-            <View style={{height: 55}}></View>
-            <Text style={aboutStyle.text} accessible={true} accessibilityLabel='App designed by Emmanuelle Brent' accessibilityRole='text'>App designed by Emmanuelle Brent</Text>
-            <Text style={aboutStyle.text} accessible={true} accessibilityLabel='Copyright 2024 Mercury Works' accessibilityRole='text'>Copyright &copy; 2024 Mercury Works</Text>
+            <Pressable style={aboutStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+				<BackArrow/>
+            </Pressable>
+            <Text style={aboutStyle.text} accessible={true} accessibilityLabel='App designed by Emmanuelle Brent & Ben Gradeck' accessibilityRole='text'>App designed by Emmanuelle Brent & Ben Gradeck</Text>
+            <Text style={aboutStyle.text} accessible={true} accessibilityLabel='Copyright 2025 Mercury Works' accessibilityRole='text'>Copyright &copy; 2025 Mercury Works</Text>
             <View>
                 <Text style={aboutStyle.text2} accessible={true} accessibilityLabel='For Medium Format 3D cameras, tools, and instructions, visit' accessibilityRole='text'>
                     For Medium Format 3D cameras, tools, and instructions, visit 
@@ -83,7 +99,7 @@ const aboutStyle = StyleSheet.create({
     // Main title
     textTitle: {
       color: 'white',
-      marginTop: 55,
+      marginTop: 0,
       margin: 5,
       fontSize: 35,
       textAlign: 'center',
@@ -129,6 +145,11 @@ const aboutStyle = StyleSheet.create({
       alignSelf: 'center',
       fontSize: 18,
     },
+    backArrow: {
+		color: 'white',
+		marginTop: 55,
+		margin: 10,
+	},
   });
 
 

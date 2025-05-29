@@ -1,9 +1,13 @@
 import * as React from 'react';
-import { StyleSheet, View , Text, SafeAreaView, Button, TextInput, ScrollView, Platform} from 'react-native';
+import { StyleSheet, View , Text, Image, SafeAreaView, Pressable, Button, TextInput, ScrollView, Platform} from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const filterList = [
     {key: '1', value: 'ND2', lightLoss: 0.5, desc: 'Enables wider apertures or longer shutter speeds in bright sunlight'},
@@ -21,18 +25,19 @@ const filterList = [
 ];
 
 
-/*const backArrow = () => {
+const BackArrow = () => {
   return (
       <Image
-        style={{ width: 15, height: 15, alignSelf: 'left'}}
-        source={require('./assets/images/.png')}
+        style={{ width: 18, height: 18, alignSelf: 'left'}}
+        source={require('../assets/images/backarrow.png')}
       />
 
   )
-}*/
+}
 
 
 const FilterScreen = () => {
+	const navigation = useNavigation();
 
 	const endRef = React.useRef();
 	const [filterHold, setFilterHold] = React.useState(null);
@@ -43,11 +48,9 @@ const FilterScreen = () => {
 	const calculateFilter = () =>{
 		if(filterHold === null){
 			//setFilterHold(1);
-			console.log("filter hold isnt chosen yet" + filterHold);
 			return;
 		}
 		let lightLoss = filterList[filterHold-1].lightLoss;
-		console.log(`light Loss: ${lightLoss} length ${lightLoss.toString().length}`);
 		let integer = Math.floor(lightLoss);
 		let decimal = lightLoss%1;
 		let finalIso;
@@ -59,8 +62,6 @@ const FilterScreen = () => {
 			finalIso = (iso/(2*integer))*decimal;
 		}
 		setResult(finalIso);
-
-		console.log(finalIso);
 
 
 
@@ -74,7 +75,11 @@ const FilterScreen = () => {
 
 	return(
 		<SafeAreaView style={filterStyle.container}>
-		<Text style={filterStyle.backArrow}>Hollo</Text>
+
+		<Pressable style={filterStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+			<BackArrow/>
+        </Pressable>
+
 		<KeyboardAwareScrollView
             ref={endRef}
             onContentSizeChange={() => {if(showResults) {endRef.current.scrollToEnd({ animated: true })}}}
@@ -160,10 +165,7 @@ const filterStyle = StyleSheet.create({
 	backArrow: {
 		color: 'white',
 		marginTop: 55,
-		margin: 5,
-		fontSize: 35,
-		textAlign: 'left',
-		fontWeight: 'bold',
+		margin: 10,
 	},
 	input: {
       height: 40,

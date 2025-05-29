@@ -1,12 +1,14 @@
 // See README.md for information about this file and how to make updates
 
 import * as React from 'react';
-import { StyleSheet, View , Text, SafeAreaView, TextInput, Button, ScrollView } from 'react-native';
+import { StyleSheet, View , Text, SafeAreaView, Image, Pressable, TextInput, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
 import RadioGroup from 'react-native-radio-buttons-group';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 // Dictionary for selecting a lens name from drop down menu, organized by focal length
 // NOTE: SOME OF THESE LENSES AND HOW THEY ARE REFERRED TO IS DIFFERENT FROM THE DOF CALCULATOR. DO NOT COPY AND PASTE BETWEEN THE TWO FILES
@@ -106,12 +108,22 @@ const fStopComparisons = [
     {display: '45', calculated: 45},
 ];
 
+const BackArrow = () => {
+  return (
+      <Image
+        style={{ width: 18, height: 18, alignSelf: 'left'}}
+        source={require('../assets/images/backarrow.png')}
+      />
+
+  )
+}
+
 var closeFocus = 0;     // will be used for the results of the calculations
 var displayUnits = "";  // will be used to display the units of the results so they don't accidentally get changed without recalculating the results
 var fStop = "";         // will be used to display the aperature for the calculated range
 
 const CloseFocusScreen = () => {
-
+	const navigation = useNavigation();
     // Reference to use to automatically scroll down to see results
     const endRef = React.useRef();
 
@@ -253,6 +265,9 @@ const CloseFocusScreen = () => {
 
     return (
         <SafeAreaView style={closeFocusStyle.container}>
+            <Pressable style={closeFocusStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+				<BackArrow/>
+            </Pressable>
             {/*Use KeyboardAware because there are some text inputs where the keyboard would otherwise cover the input */}
             <KeyboardAwareScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })}>   
 
@@ -315,8 +330,8 @@ const CloseFocusScreen = () => {
                 </View>
 
                 {/*Results*/}
-                {showResults && (<Text style={closeFocusStyle.textResult} accessible={true} accessibilityLabel="Close focus distance results" accessibilityRole="text">Close focus distance: {closeFocus} {displayUnits}</Text>)}
-                {showResults && (<Text style={closeFocusStyle.textResult} accessible={true} accessibilityLabel="Aperature for the entire range" accessibilityRole="text">Aperature for the entire range: f/{fStop}</Text>)}
+                {showResults ? (<Text style={closeFocusStyle.textResult} accessible={true} accessibilityLabel="Close focus distance results" accessibilityRole="text">Close focus distance: {closeFocus} {displayUnits}</Text>) : null}
+                {showResults ? (<Text style={closeFocusStyle.textResult} accessible={true} accessibilityLabel="Aperature for the entire range" accessibilityRole="text">Aperature for the entire range: f/{fStop}</Text>) : null}
         
             </KeyboardAwareScrollView>
         </SafeAreaView>    
@@ -338,12 +353,17 @@ const closeFocusStyle = StyleSheet.create({
     // Title text of page
     textTitle: {
         color: 'white',
-        marginTop: 55,
+        marginTop: 0,
         margin: 5,
         fontSize: 35,
         textAlign: 'center',
         fontWeight: 'bold',
         },
+    backArrow: {
+		color: 'white',
+		marginTop: 55,
+		margin: 10,
+	},
     text: {
       color: 'white',
       margin: 8,
