@@ -98,7 +98,7 @@ const HomeScreen = ({navigation}) => {
             />
             <Text style={homeStyle.buttonText}>FILTER CALCULATOR</Text>
           </Pressable>
-		//change the MERCUTY LOGO to be a bit to the left iff there is a phone
+		  {/*change the MERCUTY LOGO to be a bit to the left iff there is a phone*/}
 
           {/* The following two buttons are used to navigate to the separate Reciprocity and Pinhole calculator files*/}
           {/*Button to navigate to the Pinhole Calculator screen*
@@ -196,7 +196,7 @@ const HomeScreen = ({navigation}) => {
       color: 'white',
       margin: 8,
       marginTop: 13,
-      fontSize: 20,
+      fontSize: 18,
       textAlign: 'left',
       alignSelf: 'flex-start',
     },
@@ -206,7 +206,7 @@ const HomeScreen = ({navigation}) => {
       margin: 20,
       borderRadius: 10,
       height: 50,
-      width: '90%',
+      width: '85%',
       alignSelf: 'center',
       display: 'flex',
       justifyContent: 'center',

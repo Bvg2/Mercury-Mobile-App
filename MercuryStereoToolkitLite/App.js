@@ -8,6 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import 'react-native-reanimated';
 import { Header } from '@react-navigation/elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import * as Device from 'expo-device';
 
 // not using most of these but I'm scared to get rid of them
 import { StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, Platform, StatusBar} from 'react-native';
@@ -39,8 +40,15 @@ const HeaderLogo = () => {
 }
 
 
+
+
 // main app function
 const App = () => {
+
+
+  console.log(Device.manufacturer + ", " + Device.modelName);
+
+
   return (
     <NavigationContainer>
       <StatusBar hidden={true}/>
@@ -118,11 +126,7 @@ const App = () => {
 }
 
 const AppStyle = StyleSheet.create({
-	rightAlign: {
-	},
-	midAlign:{
 
-	},
 
 
 
