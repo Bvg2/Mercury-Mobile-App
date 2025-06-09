@@ -1,6 +1,6 @@
 // See README.md for information about this file and how to make updates
 
-import * as React from 'react';
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { StyleSheet, View , Text, SafeAreaView, Image, Pressable, TextInput, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
@@ -125,17 +125,17 @@ var fStop = "";         // will be used to display the aperature for the calcula
 const CloseFocusScreen = () => {
 	const navigation = useNavigation();
     // Reference to use to automatically scroll down to see results
-    const endRef = React.useRef();
+    const endRef = useRef();
 
     // State variables for saving information and updating the screen
-    const [selectedLens, setSelectedLens] = React.useState('');     // Name of the selected lens
-    const [farDist, setFarDist] = React.useState('0');              // Numeric far subject distance
-    const [units, setUnits] = React.useState('feet');               // id of selected radio button for units, used for claculations and updating display
-    const [showResults, setShowResults] = React.useState(false);    // Controls whether or not to display results
-    const [calculate, setCalculate] = React.useState(0);            // Incremented to "force" the page to update/recalculate results whenever changes are made
+    const [selectedLens, setSelectedLens] = useState('');     // Name of the selected lens
+    const [farDist, setFarDist] = useState('0');              // Numeric far subject distance
+    const [units, setUnits] = useState('feet');               // id of selected radio button for units, used for claculations and updating display
+    const [showResults, setShowResults] = useState(false);    // Controls whether or not to display results
+    const [calculate, setCalculate] = useState(0);            // Incremented to "force" the page to update/recalculate results whenever changes are made
 
     // Creates the radio buttons where users select their desired units for entering subject distances
-    const unitsRadioButtons = React.useMemo(() => ([
+    const unitsRadioButtons = useMemo(() => ([
         {
             id: 'feet', // acts as primary key, should be unique and non-empty string
             label: 'feet',

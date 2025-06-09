@@ -1,6 +1,6 @@
 // See README.md for information about this file and how to make updates
 
-import * as React from 'react';
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { StyleSheet, View , Text, Image, Pressable, SafeAreaView, TextInput, Button, ScrollView, Platform } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
@@ -59,19 +59,19 @@ var displayUnits = "mm";
 const BaseScreen = () => {
 	const navigation = useNavigation();
     // Reference to use to automatically scroll down to see results
-    const endRef = React.useRef();
+    const endRef = useRef();
 
     // State variables for saving information and updating the screen
-    const [selectedLens, setSelectedLens] = React.useState('');     // Name of the selected lens
-    const [units, setUnits] = React.useState('feet');               // id of selected radio button for units, used for claculations and updating display
-    const [nearDist, setNearDist] = React.useState('0');            // Near subject distance, default is 0
-    const [farDistIndex, setFarDistIndex] = React.useState('0');    // Radio button index for the far subject distance; 1 is INF, 2 allows the user to enter a number
-    const [farDist, setFarDist] = React.useState('0');              // Numeric far subject distance, if the user selects to enter one
-    const [showResults, setShowResults] = React.useState(false);    // Controls whether or not to display results
-    const [calculate, setCalculate] = React.useState(0);            // Incremented to "force" the page to update/recalculate results whenever changes are made
+    const [selectedLens, setSelectedLens] = useState('');     // Name of the selected lens
+    const [units, setUnits] = useState('feet');               // id of selected radio button for units, used for claculations and updating display
+    const [nearDist, setNearDist] = useState('0');            // Near subject distance, default is 0
+    const [farDistIndex, setFarDistIndex] = useState('0');    // Radio button index for the far subject distance; 1 is INF, 2 allows the user to enter a number
+    const [farDist, setFarDist] = useState('0');              // Numeric far subject distance, if the user selects to enter one
+    const [showResults, setShowResults] = useState(false);    // Controls whether or not to display results
+    const [calculate, setCalculate] = useState(0);            // Incremented to "force" the page to update/recalculate results whenever changes are made
 
     // Creates the radio buttons where users select a far subject distance (INF or a custom numeric value)
-    const distRadioButtons = React.useMemo(() => ([
+    const distRadioButtons = useMemo(() => ([
         {
             id: '1', // acts as primary key, should be unique and non-empty string
             label: 'INF',
@@ -97,7 +97,7 @@ const BaseScreen = () => {
     ]), []);
 
     // Creates the radio buttons where users select their desired units for entering subject distances
-    const unitsRadioButtons = React.useMemo(() => ([
+    const unitsRadioButtons = useMemo(() => ([
         {
             id: 'feet', // acts as primary key, should be unique and non-empty string
             label: 'feet',

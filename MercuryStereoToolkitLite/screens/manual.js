@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, Linking, Alert} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';

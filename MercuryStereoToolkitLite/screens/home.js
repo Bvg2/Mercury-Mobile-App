@@ -1,15 +1,25 @@
 // See README.md for information about this file and how to make updates
 
-import * as React from 'react';
-import { StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, ScrollView, Linking} from 'react-native';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import { StyleSheet, Modal, Text, View, Button, SafeAreaView, Image, Pressable, ScrollView, Linking} from 'react-native';
 
 
 //link to external Mercury Stereo User Guide
 const userGuideURL = 'https://www.mercurystereo.com/mobile/mobileguide.html';
 
+
+const descriptions = [
+	"Use this tool to Calculate the hyperfocal configuration for a given lens on a Mercury Stereo camera",
+	"This tool calculates the Depth of field calculations for all Mercury lens and spacer combinations",
+	"Use this tool when you can restrict the visible distance range in your image. Enter the farthest visible object, and this will calculate the closest possible subject that will produce a 'legal' (comfortably viewable) stereo photo. The f-stop displayed will keep this entire range in sharp focus, but that's optional.",
+	"This tool calculates the ideal base distance (distance between the stereo lenses) depending on the distance to your subject(s). This is for medium format 6x6 photography. Use it for very close and very distant subjects.",
+	"Meter for f/22. Select your pinhole size, film stock, and the exposure time your meter calculates, and we will calculate your actual exposure time (taking into account your pinhole and film reciprocity).",
+	"When shooting long exposures(over 1 second), use this calculator to convert your metered exposure to the actual exposure time required by your film stock",
+	"This tool displays Popular filters and, their effects, and calculated exposure compensation"];
+
 // component for opening external links
 const OpenURLLink = ({url, children}) => {
-  const handlePress = React.useCallback(async () => {
+  const handlePress = useCallback(async () => {
     // Checking if the link is supported for links with custom URL scheme.
     const supported = await Linking.canOpenURL(url);
 
@@ -28,16 +38,40 @@ const OpenURLLink = ({url, children}) => {
 // Home screen of app
 const HomeScreen = ({navigation}) => {
 
-  
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalTitle, setModalTitle] = useState("Title");
+    const [modalData, setModalData] = useState(descriptions[3]);
+
 
     return(
       <SafeAreaView style={homeStyle.container}>
         <ScrollView>
           {/*Title of the app*/}
           <Text style={homeStyle.textTitle} accessible={true} accessibilityLabel="Mercury Stereo Toolkit" accessibilityRole="text">Mercury Stereo Toolkit</Text>
-          
+			<Text style={{color:"#e8e8e8", textAlign:'center'}}>Long Press Buttons To View Descriptions</Text>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={()=> {
+                Alert.alert('closing this modal');
+                setModalVisible(!modalVisible);
+          }}>
+            <View style={homeStyle.centeredView}>
+                <View style={homeStyle.modalView}>
+					<Pressable
+                        onPress={() => setModalVisible(!modalVisible)}>
+                        <Text style={{margin: 15, color: 'white', fontSize: 25, textAlign: 'right', alignItems:'right', justifyContent:'right'}}>x</Text>
+                    </Pressable>
+                    <Text style={[homeStyle.textTitle, {marginTop:0, marginBottom:10}]}>{modalTitle}</Text>
+                    <Text style={[homeStyle.text, {fontSize: 20, color:'#e8e8e8'}]}>{modalData}</Text>
+				</View>
+			</View>
+
+		</Modal>
+
           {/*Button to navigate to the Hyperfocal tab on the DOF screen*/}
-          <Pressable onPress={() => navigation.navigate("DOFScreen", {tab: 0})} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Hyperfocal" accessibilityHint="Navigates to the hyperfocal calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("DOFScreen", {tab: 0})} onLongPress={() => {setModalVisible(!modalVisible); setModalTitle("HyperFocal"); setModalData(descriptions[0])}} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Hyperfocal" accessibilityHint="Navigates to the hyperfocal calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/blackOnNothing.png')}
@@ -46,7 +80,7 @@ const HomeScreen = ({navigation}) => {
           </Pressable>
           
           {/*Button to navigate to the DOF tab on the DOF screen*/}
-          <Pressable onPress={() => navigation.navigate("DOFScreen", {tab: 1})} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Depth of field" accessibilityHint="Navigates to the depth of field calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("DOFScreen", {tab: 1})} onLongPress={() => {setModalVisible(!modalVisible); setModalTitle("Depth of Field"); setModalData(descriptions[1])}} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Depth of field" accessibilityHint="Navigates to the depth of field calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/blackOnNothing.png')}
@@ -55,7 +89,7 @@ const HomeScreen = ({navigation}) => {
           </Pressable>
 
           {/*Button to navigate to the Close Focus Calculator screen*/}
-          <Pressable onPress={() => navigation.navigate("CloseFocusScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Depth range (close up)" accessibilityHint="Navigates to the close focus calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("CloseFocusScreen")} onLongPress={() => {setModalVisible(!modalVisible); setModalTitle("Depth Range"); setModalData(descriptions[2])}} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white'}, homeStyle.button]} accessible={true} accessibilityLabel="Depth range (close up)" accessibilityHint="Navigates to the close focus calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/ruler.png')}
@@ -64,7 +98,7 @@ const HomeScreen = ({navigation}) => {
           </Pressable>
 
           {/*Button to navigate to the Base Distance Calculator screen*/}
-          <Pressable onPress={() => navigation.navigate("BaseScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Base distance (hypo/hyper)" accessibilityHint="Navigates to the base distance calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("BaseScreen")} onLongPress={() => {setModalVisible(!modalVisible); setModalTitle("Base Distance"); setModalData(descriptions[3])}} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Base distance (hypo/hyper)" accessibilityHint="Navigates to the base distance calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/base.png')}
@@ -73,7 +107,7 @@ const HomeScreen = ({navigation}) => {
           </Pressable>
 
           {/*Button to navigate to the Pinhole tab on the Reciprocity Calculator screen*/}
-          <Pressable onPress={() => navigation.navigate("CombinedReciprocityScreen", {tab: 0})} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Pinhole" accessibilityHint="Navigates to the pinhole calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("CombinedReciprocityScreen", {tab: 0})} onLongPress={() => {setModalVisible(!modalVisible); setModalTitle("Pinhole"); setModalData(descriptions[4])}} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Pinhole" accessibilityHint="Navigates to the pinhole calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/timer.png')}
@@ -83,7 +117,7 @@ const HomeScreen = ({navigation}) => {
     
 
           {/*Button to navigate to the Reciprocity Only tab on the Reciprocity Calculator screen*/}
-          <Pressable onPress={() => navigation.navigate("CombinedReciprocityScreen", {tab: 1})} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Reciprocity (long exposures)" accessibilityHint="Navigates to the reciprocity only calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("CombinedReciprocityScreen", {tab: 1})} onLongPress={() => {setModalVisible(!modalVisible); setModalTitle("Reciprocity"); setModalData(descriptions[5])}} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Reciprocity (long exposures)" accessibilityHint="Navigates to the reciprocity only calculator screen" accessibilityRole="button">
             <Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/timer.png')}
@@ -91,7 +125,7 @@ const HomeScreen = ({navigation}) => {
             <Text style={homeStyle.buttonText}>RECIPROCITY (LONG EXPOSURES)</Text>
           </Pressable>
 
-          <Pressable onPress={() => navigation.navigate("FilterScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Filter Calculator" accessibilityHint="Navigates to the filter calculator screen" accessibilityRole="button">
+          <Pressable onPress={() => navigation.navigate("FilterScreen")} onLongPress={() => {setModalVisible(!modalVisible); setModalTitle("Filter Calculator"); setModalData(descriptions[6])}} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.button,]} accessible={true} accessibilityLabel="Filter Calculator" accessibilityHint="Navigates to the filter calculator screen" accessibilityRole="button">
 			<Image
               style={{ width: 25, height: 25, alignSelf: 'center', marginRight: 8}}
               source={require('../assets/images/filter.png')}
@@ -191,6 +225,32 @@ const HomeScreen = ({navigation}) => {
       fontSize: 22,
       textAlign: 'center',
     },
+    modalView: {
+	    margin: 20,
+	    backgroundColor: 'black',
+	    borderRadius: 20,
+	    borderColor: 'white',
+	    borderWidth: 2,
+	    padding: 25,
+	    paddingVertical: 5,
+	    width: 375,
+	    height: 450,
+
+	    shadowColor: '#ffff',
+	    shadowOffset: {
+	      width: 0,
+	      height: 2,
+	    },
+	    shadowOpacity: 0.25,
+	    shadowRadius: 4,
+	    elevation: 5,
+    },
+    centeredView: {
+		flex: 1,
+		justifyContent: 'center',
+
+	},
+
     // Body text
     text: {
       color: 'white',

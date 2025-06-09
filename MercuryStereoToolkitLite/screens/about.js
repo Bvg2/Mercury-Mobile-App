@@ -1,6 +1,6 @@
 // See README.md for information about this file and how to make updates
 
-import * as React from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, Linking, Alert} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
@@ -10,7 +10,7 @@ const mercuryStereoURL = 'https://www.mercurystereo.com';
 const paypalURL = 'https://www.paypal.com/ncp/payment/TQDA8X6HZKP5Y';
 
 const OpenURLLink = ({url, children}) => {
-  const handlePress = React.useCallback(async () => {
+  const handlePress = useCallback(async () => {
     // Checking if the link is supported for links with custom URL scheme.
     const supported = await Linking.canOpenURL(url);
 
@@ -27,7 +27,7 @@ const OpenURLLink = ({url, children}) => {
 };
 
 const OpenURLButton = ({url, children}) => {
-  const handlePress = React.useCallback(async () => {
+  const handlePress = useCallback(async () => {
     // Checking if the link is supported for links with custom URL scheme.
     const supported = await Linking.canOpenURL(url);
 

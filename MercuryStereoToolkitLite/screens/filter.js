@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { StyleSheet, View , Text, Image, SafeAreaView, Pressable, Button, TextInput, ScrollView, Platform} from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
@@ -39,11 +39,11 @@ const BackArrow = () => {
 const FilterScreen = () => {
 	const navigation = useNavigation();
 
-	const endRef = React.useRef();
-	const [filterHold, setFilterHold] = React.useState(null);
-	const [showResults, setShowResults] = React.useState(false);
-	const [iso, setIso] = React.useState(0);
-	const [result, setResult] = React.useState(null);
+	const endRef = useRef();
+	const [filterHold, setFilterHold] = useState(null);
+	const [showResults, setShowResults] = useState(false);
+	const [iso, setIso] = useState(0);
+	const [result, setResult] = useState(null);
 
 	const calculateFilter = () =>{
 		if(filterHold === null){

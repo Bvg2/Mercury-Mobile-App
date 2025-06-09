@@ -4,7 +4,7 @@
 // NECESSARY UPDATES: INCLUDE OPTION FOR USERS TO SELECT WHETHER THEY WANT TO SEE RESULTS IN METERS OR FEET, AND CALCULATE THAT CONVERSION
 // ALSO HAVE CALRIFY ABOUT USING THE BASE DURING HYPERFOCAL CALCULATION FOR LENSES WITHOUT SPACERS
 
-import * as React from 'react';
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { StyleSheet, View , Text, Image, Pressable, SafeAreaView, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
@@ -143,20 +143,20 @@ const DOFScreen = ({route}) => {
 
   const navigation = useNavigation();
   // Reference to use to automatically scroll down to see results
-  const endRef = React.useRef();
+  const endRef = useRef();
 
   // State variables used for storing data 
-    const [selectedIndex, setSelectedIndex] = React.useState(route.params.tab);     // Stores which segmented-control tab is selected to display DOF or hyperfocal. Default value is passed in from navigation from the home screen to load the correct tab
-    const [selectedLens, setSelectedLens] = React.useState('Apo-Digitar 35mm f/5.6 XL');    // Store the selected lens for both hyperfocal and DOF
-    const [selectedBase, setSelectedBase] = React.useState('RS0, B6.4');            // Store the selected base for DOF calculation
-    const [selectedSpacer, setSelectedSpacer] = React.useState('none');             // Store the selected spacer for DOF calculation
-    const [selectedFStop, setSelectedFStop] = React.useState('F-22');               // Store the selected f-stop value for hyperfocal calculation
+    const [selectedIndex, setSelectedIndex] = useState(route.params.tab);     // Stores which segmented-control tab is selected to display DOF or hyperfocal. Default value is passed in from navigation from the home screen to load the correct tab
+    const [selectedLens, setSelectedLens] = useState('Apo-Digitar 35mm f/5.6 XL');    // Store the selected lens for both hyperfocal and DOF
+    const [selectedBase, setSelectedBase] = useState('RS0, B6.4');            // Store the selected base for DOF calculation
+    const [selectedSpacer, setSelectedSpacer] = useState('none');             // Store the selected spacer for DOF calculation
+    const [selectedFStop, setSelectedFStop] = useState('F-22');               // Store the selected f-stop value for hyperfocal calculation
     //const [showBase, setShowBase] = React.useState(true);                         // Want to include this to get rid of the option to select a base when there's only one option, but as soon as I try to use it the page infinitely re - renders :/
     //const [showSpacer, setShowSpacer] = React.useState(true);                     // Want to include this to get rid of the option to select a spacer when there's only one option, but as soon as I try to use it the page infinitely re - renders :/
-    const [selectedUnits, setSelectedUnits] = React.useState('feet');                               // Stores the selected units to display the results as the user chooses
-    const [recalculateOptions, setRecalculateOptions] = React.useState(0);          // Because state variables are asynchronous, sometimes it gets an update behind. This variable is incremented each time we want to "force" the screen to re-render with the most up-to-date information
-    const [showDOFResult, setShowDOFResult] = React.useState(false);                // If DOF is being calculated, this is set to true to display the correct result fields
-    const [showHyperfocalResult, setShowHyperfocalResult] = React.useState(false);  // If hyperfocal is being calculated, this is set to true to display the correct result fields
+    const [selectedUnits, setSelectedUnits] = useState('feet');                               // Stores the selected units to display the results as the user chooses
+    const [recalculateOptions, setRecalculateOptions] = useState(0);          // Because state variables are asynchronous, sometimes it gets an update behind. This variable is incremented each time we want to "force" the screen to re-render with the most up-to-date information
+    const [showDOFResult, setShowDOFResult] = useState(false);                // If DOF is being calculated, this is set to true to display the correct result fields
+    const [showHyperfocalResult, setShowHyperfocalResult] = useState(false);  // If hyperfocal is being calculated, this is set to true to display the correct result fields
 
     // Custom function to update which tab is being displayed and clear the results whenever the tab is switched
     const handleSingleIndexSelect = (index) => {
@@ -325,7 +325,7 @@ const DOFScreen = ({route}) => {
       }
     }
 
-    const unitsRadioButtons = React.useMemo(() => ([
+    const unitsRadioButtons = useMemo(() => ([
       {
           id: 'feet', // acts as primary key, should be unique and non-empty string
           label: 'feet',

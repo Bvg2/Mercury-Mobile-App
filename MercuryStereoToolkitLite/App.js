@@ -1,6 +1,6 @@
 // See README.md for information about this file and how to make updates
 
-import * as React from 'react';
+import React, { useEffect, useRef, useState, useMemo } from "react";
 
 // navigation imports -- see the README for links to more information about these
 import {NavigationContainer} from '@react-navigation/native';
@@ -32,7 +32,7 @@ const Stack = createNativeStackNavigator();
 const HeaderLogo = () => {
   return (
       <Image
-        style={{ width: 50, height: 50, alignSelf: 'center'}}
+        style={{ marginLeft:'85%', margin:7, width: 50, height: 50, alignSelf: 'left'}}
         source={require('./assets/images/mercuryLogoWhiteOnBlack.png')}
       />
 
@@ -59,7 +59,7 @@ const App = () => {
           //headerTransparent: false,
           //headerMode: 'float',
           header: ({navigation}) => (
-            <SafeAreaView style= {{flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', backgroundColor: 'black', height: 0}}>     
+            <SafeAreaView style= {{flex: 1, flexDirection: 'row', alignSelf: 'left', justifyContent: 'left', backgroundColor: 'black', height: 0}}>
               <View style={{backgroundColor:'black', height: 55, width: '100%'}}>
                 <Pressable onPress={() => navigation.navigate("Home")}>
                   <HeaderLogo/>

@@ -1,6 +1,6 @@
 // See README.md for information about this file and how to make updates
 
-import * as React from 'react';
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { StyleSheet, View , Text, SafeAreaView, Pressable, TextInput, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
@@ -41,16 +41,16 @@ var reciprocityTime = 0;
 const ReciprocityScreen = () => {
 
   // Reference to use to automatically scroll down to see results
-    const endRef = React.useRef();
+    const endRef = useRef();
 
   // State variables for saving data and updating the screen
-    const [selectedFilm, setSelectedFilm] = React.useState(''); // Selected film stock
-    const [time, onChangeTime] = React.useState('');            // The time entered by users in the textbox
-    const [result, showResult] = React.useState(false);         // Boolean value for whether or not to display results
-    const [updateResult, setUpdateResult] = React.useState(0);  // Value to increment to ensure that the screen is displayed with the most up-to-date data
+    const [selectedFilm, setSelectedFilm] = useState(''); // Selected film stock
+    const [time, onChangeTime] = useState('');            // The time entered by users in the textbox
+    const [result, showResult] = useState(false);         // Boolean value for whether or not to display results
+    const [updateResult, setUpdateResult] = useState(0);  // Value to increment to ensure that the screen is displayed with the most up-to-date data
     //const [key, setKey] = React.useState(0);                    // Variable which allows the countdown timer to be restarted at any point
     //const [playTimer, setPlayTimer] = React.useState(false);    // Boolean value which controls whether the countdown timer is playing or not
-    const [timerEnd, setTimerEnd] = React.useState(false);      // Boolean variable to track whether the countdown timer has completed counting down (determines when sound plays and screen color turns red)
+    const [timerEnd, setTimerEnd] = useState(false);      // Boolean variable to track whether the countdown timer has completed counting down (determines when sound plays and screen color turns red)
     //const [sound, setSound] = React.useState();                 // Variable which the sound effect is assigned to
     
 
