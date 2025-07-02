@@ -15,26 +15,24 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const newFocalLenth = [
-    {key:'1', value:'24mm'},
-    {key:'2', value:'25mm'},
-    {key:'3', value:'28mm'},
-    {key:'4', value:'30mm'},
-    {key:'5', value:'35mm'},
-    {key:'6', value:'40mm'},
-    {key:'7', value:'45mm'},
-    {key:'8', value:'50mm'},
-    {key:'9', value:'55mm'},
-    {key:'10', value:'60mm'},
-    {key:'11', value:'65mm'},
-    {key:'12', value:'70mm'},
-    {key:'13', value:'75mm'},
-    {key:'14', value:'80mm'},
-    {key:'15', value:'150mm'},
-    {key:'16', value:'165mm'},
-    {key:'17', value:'180mm'},
-    {key:'18', value:'200mm'},
-    {key:'19', value:'250mm'},
-    {key:'20', value:'300mm'},
+    {key:'1', value:'35mm'},
+    {key:'2', value:'50mm'},
+    {key:'3', value:'55mm'},
+    {key:'4', value:'60mm'},
+    {key:'5', value:'65mm'},
+    {key:'6', value:'75mm'},
+    {key:'7', value:'80mm'},
+    {key:'8', value:'90mm'},
+    {key:'9', value:'100mm'},
+    {key:'10', value:'105mm'},
+    {key:'11', value:'120mm'},
+    {key:'12', value:'135mm'},
+    {key:'13', value:'150mm'},
+    {key:'14', value:'165mm'},
+    {key:'15', value:'180mm'},
+    {key:'16', value:'200mm'},
+    {key:'17', value:'250mm'},
+    {key:'18', value:'300mm'},
 ];
 
 const BackArrow = () => {
@@ -269,9 +267,9 @@ const BaseScreen = () => {
 
     return (
         <SafeAreaView style={baseStyle.container}>
-	        <Pressable style={baseStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+			{Platform.OS === 'android' ? <Pressable style={baseStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 				<BackArrow/>
-	        </Pressable>
+            </Pressable> : null}
 
             {/*Use KeyboardAware because there are some text inputs where the keyboard would otherwise cover the input */}
             <KeyboardAwareScrollView 
@@ -388,6 +386,7 @@ const baseStyle = StyleSheet.create({
       flex: 1,
       backgroundColor: 'black',
       justifyContent: 'top',
+
     },
     contentBlock: {
       flex: .2,
@@ -413,7 +412,7 @@ const baseStyle = StyleSheet.create({
     },
 	backArrow: {
 		color: 'white',
-		marginTop: 55,
+		marginTop: 60,
 		margin: 10,
 	},
     textResult: {

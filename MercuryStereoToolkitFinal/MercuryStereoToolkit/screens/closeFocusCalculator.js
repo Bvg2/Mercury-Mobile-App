@@ -1,7 +1,7 @@
 // See README.md for information about this file and how to make updates
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import { StyleSheet, View , Text, SafeAreaView, Image, Pressable, TextInput, Button, ScrollView } from 'react-native';
+import { Platform, StyleSheet, View , Text, SafeAreaView, Image, Pressable, TextInput, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
@@ -265,11 +265,11 @@ const CloseFocusScreen = () => {
 
     return (
         <SafeAreaView style={closeFocusStyle.container}>
-            <Pressable style={closeFocusStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+            {Platform.OS === 'android' ? <Pressable style={closeFocusStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 				<BackArrow/>
-            </Pressable>
+            </Pressable> : null}
             {/*Use KeyboardAware because there are some text inputs where the keyboard would otherwise cover the input */}
-            <KeyboardAwareScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })}>   
+            <KeyboardAwareScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })} contentContainerStyle={{paddingBottom: 60}}>
 
                 {/*Page title*/}
                 <Text style={closeFocusStyle.textTitle} accessible={true} accessibilityLabel="Depth range (close up)" accessibilityRole="text">Depth Range (Close Up)</Text>
@@ -361,7 +361,7 @@ const closeFocusStyle = StyleSheet.create({
         },
     backArrow: {
 		color: 'white',
-		marginTop: 55,
+		marginTop: 60,
 		margin: 10,
 	},
     text: {

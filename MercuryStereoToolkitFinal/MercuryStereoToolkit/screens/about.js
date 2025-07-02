@@ -1,7 +1,7 @@
 // See README.md for information about this file and how to make updates
 
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
-import { StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, Linking, Alert} from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, Linking, Alert} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
@@ -61,9 +61,9 @@ const AboutScreen = () => {
 
     return(
         <SafeAreaView style={aboutStyle.container}>
-            <Pressable style={aboutStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+            {Platform.OS === 'android' ? <Pressable style={aboutStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 				<BackArrow/>
-            </Pressable>
+            </Pressable> : null}
             <Text style={aboutStyle.text} accessible={true} accessibilityLabel='App designed by Emmanuelle Brent & Ben Gradeck' accessibilityRole='text'>App designed by Emmanuelle Brent & Ben Gradeck</Text>
             <Text style={aboutStyle.text} accessible={true} accessibilityLabel='Copyright 2025 Mercury Works' accessibilityRole='text'>Copyright &copy; 2025 Mercury Works</Text>
             <View>
@@ -93,8 +93,9 @@ const aboutStyle = StyleSheet.create({
     // background of the page
     container: {
       flex: 1,
+
       backgroundColor: 'black',
-      justifyContent: 'tops',
+      justifyContent: 'start',
     },
     // Main title
     textTitle: {
@@ -147,8 +148,9 @@ const aboutStyle = StyleSheet.create({
     },
     backArrow: {
 		color: 'white',
-		marginTop: 55,
+		marginTop: 60,
 		margin: 10,
+
 	},
   });
 

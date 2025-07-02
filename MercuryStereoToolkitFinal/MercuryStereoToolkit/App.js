@@ -33,7 +33,7 @@ const Stack = createNativeStackNavigator();
 const HeaderLogo = () => {
   return (
       <Image
-        style={{ marginLeft:'85%', margin:7, width: 50, height: 50, alignSelf: 'left'}}
+        style={{margin:7, width: 45, height: 45, alignSelf: 'center'}}
         source={require('./assets/images/mercuryLogoWhiteOnBlack.png')}
       />
 
@@ -61,7 +61,7 @@ const App = () => {
           //headerMode: 'float',
           header: ({navigation}) => (
             <SafeAreaView style= {{flex: 1, flexDirection: 'row', alignSelf: 'left', justifyContent: 'left', backgroundColor: 'black', height: 0}}>
-              <View style={{backgroundColor:'black', height: 55, width: '100%'}}>
+              <View style={{backgroundColor:'black', height: 60, width: '100%'}}>
                 <Pressable onPress={() => navigation.navigate("Home")}>
                   <HeaderLogo/>
                 </Pressable>

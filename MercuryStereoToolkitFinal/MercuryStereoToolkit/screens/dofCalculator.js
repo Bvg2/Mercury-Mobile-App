@@ -5,7 +5,7 @@
 // ALSO HAVE CALRIFY ABOUT USING THE BASE DURING HYPERFOCAL CALCULATION FOR LENSES WITHOUT SPACERS
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import { StyleSheet, View , Text, Image, Pressable, SafeAreaView, Button, ScrollView } from 'react-native';
+import { Platform, StyleSheet, View , Text, Image, Pressable, SafeAreaView, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
@@ -545,10 +545,10 @@ const DOFScreen = ({route}) => {
     // The return statement contains the contents displayed on the screen that the user interacts with  
     return(
       <SafeAreaView style={dofStyle.container}>
-        <Pressable style={dofStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+        {Platform.OS === 'android' ? <Pressable style={dofStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 			<BackArrow/>
-        </Pressable>
-        <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })}>
+        </Pressable> : null}
+        <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })} contentContainerStyle={{paddingBottom: 60}}>
           {/*Page titles -- the one displayed depends on the value of the state variable controlled by the segmented control tab*/}
           {selectedIndex == 1 ? (<Text style={dofStyle.textTitle} accessible={true} accessibilityLabel="Depth of field" accessibilityRole="text">Depth of Field</Text>) : null}
           {selectedIndex == 0 ? (<Text style={dofStyle.textTitle} accessible={true} accessibilityLabel="Hyperfocal" accessibilityRole="text">Hyperfocal</Text>) : null}
@@ -708,7 +708,7 @@ const dofStyle = StyleSheet.create({
     },
     backArrow: {
 		color: 'white',
-		marginTop: 55,
+		marginTop: 60,
 		margin: 10,
 	},
     // Title text of page

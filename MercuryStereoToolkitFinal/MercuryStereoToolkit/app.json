@@ -4,9 +4,14 @@
     "slug": "MercuryStereoToolkit",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/mercuryLogoWhiteOnBlack.png",
     "scheme": "mercurystereotoolkit",
     "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/mercuryLogoWhiteOnBlack.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
+    },
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true

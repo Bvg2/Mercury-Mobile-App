@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { StyleSheet, Modal, Text, View, Button, SafeAreaView, Image, Pressable, ScrollView, Linking} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 //link to external Mercury Stereo User Guide
@@ -45,7 +46,7 @@ const HomeScreen = ({navigation}) => {
 
     return(
       <SafeAreaView style={homeStyle.container}>
-        <ScrollView>
+        <KeyboardAwareScrollView contentContainerStyle={{paddingBottom: 60}}>
           {/*Title of the app*/}
           <Text style={homeStyle.textTitle} accessible={true} accessibilityLabel="Mercury Stereo Toolkit" accessibilityRole="text">Mercury Stereo Toolkit</Text>
 			<Text style={{color:"#e8e8e8", textAlign:'center'}}>Long Press Buttons To View Descriptions</Text>
@@ -174,7 +175,7 @@ const HomeScreen = ({navigation}) => {
 
 
 	          <View style={{marginTop: 10, width: 100, flexDirection:'column', marginRight:15}}>
-	            <Pressable onPress={() => navigation.navigate("ManualScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.smallButton,]} accessible={true} accessibilityLabel="userGuide" accessibilityHint="Navigates to the userGuide screen" accessibilityRole="button">
+	            <Pressable onPress={() => Linking.openURL('https://www.mercurystereo.com/mobile/mobileguide.html')} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.smallButton,]} accessible={true} accessibilityLabel="userGuide" accessibilityHint="Navigates to the userGuide screen" accessibilityRole="button">
 					<Image
 	                 style={{ width: 50, height: 50, alignSelf: 'center'}}
 	                 source={require('../assets/images/manual.png')}
@@ -193,7 +194,7 @@ const HomeScreen = ({navigation}) => {
           {/*Add new buttons here as new screens are created!*/}
 
 
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     )
   }
@@ -227,14 +228,17 @@ const HomeScreen = ({navigation}) => {
     },
     modalView: {
 	    margin: 20,
+	    textAlign: 'center',
+	    justifyContent: 'center',
+	    alignSelf: 'center',
 	    backgroundColor: 'black',
 	    borderRadius: 20,
 	    borderColor: 'white',
 	    borderWidth: 2,
 	    padding: 25,
 	    paddingVertical: 5,
-	    width: 375,
-	    height: 450,
+	    width: '75%',
+	    height: '45%',
 
 	    shadowColor: '#ffff',
 	    shadowOffset: {

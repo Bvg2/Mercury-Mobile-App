@@ -76,9 +76,9 @@ const FilterScreen = () => {
 	return(
 		<SafeAreaView style={filterStyle.container}>
 
-		<Pressable style={filterStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+		{Platform.OS === 'android' ? <Pressable style={filterStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 			<BackArrow/>
-        </Pressable>
+        </Pressable> : null}
 
 		<KeyboardAwareScrollView
             ref={endRef}
@@ -164,7 +164,7 @@ const filterStyle = StyleSheet.create({
 	},
 	backArrow: {
 		color: 'white',
-		marginTop: 55,
+		marginTop: 60,
 		margin: 10,
 	},
 	input: {

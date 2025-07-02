@@ -1,7 +1,7 @@
 // See README.md for information about this file and how to make updates
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import { StyleSheet, View , Text, SafeAreaView, Pressable, Image, TextInput, Button, ScrollView } from 'react-native';
+import { Platform, StyleSheet, View , Text, SafeAreaView, Pressable, Image, TextInput, Button, ScrollView } from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
@@ -41,6 +41,34 @@ const BackArrow = () => {
       />
 
   )
+}
+
+const calculateTime = (time) => {
+	let totalTime = time/60;
+	console.log(totalTime);
+	let mins = Math.floor(totalTime);
+	let seconds = totalTime % 1;
+	seconds = seconds.toFixed(2)
+	console.log("secs" + seconds);
+	if(seconds >= 0.60){
+		mins+=1;
+		seconds-=.60;
+		seconds = seconds.toFixed(2)
+	}
+	if (seconds === 0){
+		return mins;
+	}
+	else{
+		console.log(seconds);
+		seconds = seconds.toString();
+		seconds = seconds.substring(2);
+		let final = `${mins}:${seconds}`;
+
+
+		return final
+	}
+
+
 }
 
 // Global variable which stores the calculated reciprocity time, based on the selected film stock
@@ -183,10 +211,10 @@ const CombinedReciprocityScreen = ({route}) => {
 
     return (
       <SafeAreaView style={[(timerEnd == false) ? reciprocityStyle.containerRegular : reciprocityStyle.containerTimerEnd]}>
-        <Pressable style={reciprocityStyle.backArrow} onPress={() => navigation.navigate("Home")}>
-         <BackArrow/>
-        </Pressable>
-        <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })}>
+        {Platform.OS === 'android' ? <Pressable style={reciprocityStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+			<BackArrow/>
+        </Pressable> : null}
+        <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })} contentContainerStyle={{paddingBottom: 60}}>
             
             {/*Title*/}
             {selectedIndex == 0 ? (<Text style={reciprocityStyle.textTitle} accessible={true} accessibilityLabel="Pinhole" accessibilityRole="text">Pinhole</Text>) : null}
@@ -278,18 +306,18 @@ const CombinedReciprocityScreen = ({route}) => {
             /> 
             <Text style={reciprocityStyle.text}> seconds</Text>
           </View>
-          <View style={reciprocityStyle.button} accessible={true} accessibilityLabel="Click to show the calculated base distance results, will not change to a different screen" accessibilityRole="button">
+          <View style={reciprocityStyle.button} accessible={true} accessibilityLabel="Click to show the calculated exposure time results, will not change to a different screen" accessibilityRole="button">
 	            <Button
-	                title= "Calculate filter change"
+	                title= "CALCULATE EXPOSURE TIME"
 	                onPress={() =>  calculatePinhole(selectedPinholeSize, selectedFilm, time)}
 	                color="#000000"
 	            />
-	        </View>
+	      </View>
 
 
             
           {/*Results text*/}
-            {result ? (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time:  {reciprocityTime} seconds</Text>) : null}
+            {result ? (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time: {calculateTime(reciprocityTime)} minutes</Text>) : null}
 
       {/*
           {/*Countdown timer
@@ -337,6 +365,7 @@ const reciprocityStyle = StyleSheet.create({
       flex: 1,
       backgroundColor: 'black',
       justifyContent: 'top',
+
     },
     containerTimerEnd: {
       flex: 1,
@@ -345,7 +374,7 @@ const reciprocityStyle = StyleSheet.create({
     },
     backArrow: {
 		color: 'white',
-		marginTop: 55,
+		marginTop: 60,
 		margin: 10,
 	},
     contentBlock: {

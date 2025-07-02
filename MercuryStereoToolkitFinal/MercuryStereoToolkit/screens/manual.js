@@ -20,7 +20,7 @@ const ManualScreen = () => {
 	const navigation = useNavigation();
 
 	return(
-	<SafeAreaView style={manualStyle.container}>
+	<SafeAreaView style={manualStyle.container} contentContainerStyle={{paddingBottom: 60}}>
 
         <Pressable style={manualStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 			<BackArrow/>

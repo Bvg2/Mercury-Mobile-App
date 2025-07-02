@@ -1,7 +1,7 @@
 // See README.md for information about this file and how to make updates
 
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
-import { StyleSheet, Modal, Text, View, Button, SafeAreaView, Image, Pressable, ScrollView, Linking} from 'react-native';
+import { StyleSheet, Modal, Text, View, Button, SafeAreaView, Image, Linking, Pressable, ScrollView, Linking} from 'react-native';
 
 
 //link to external Mercury Stereo User Guide
@@ -174,7 +174,7 @@ const HomeScreen = ({navigation}) => {
 
 
 	          <View style={{marginTop: 10, width: 100, flexDirection:'column', marginRight:15}}>
-	            <Pressable onPress={() => navigation.navigate("ManualScreen")} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.smallButton,]} accessible={true} accessibilityLabel="userGuide" accessibilityHint="Navigates to the userGuide screen" accessibilityRole="button">
+	            <Pressable onPress={() => Linking.openURL('https://www.mercurystereo.com/mobile/mobileguide.html')} style={({pressed}) => [{backgroundColor: pressed ? 'rgb(211, 211, 211)' : 'white',}, homeStyle.smallButton,]} accessible={true} accessibilityLabel="userGuide" accessibilityHint="Navigates to the userGuide screen" accessibilityRole="button">
 					<Image
 	                 style={{ width: 50, height: 50, alignSelf: 'center'}}
 	                 source={require('../assets/images/manual.png')}

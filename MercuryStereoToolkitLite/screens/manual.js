@@ -30,7 +30,7 @@ const ManualScreen = () => {
 
         <Text style={manualStyle.textTitle}>Mercury Stereo Manual</Text>
 
-        <WebView source={{ uri: 'https://www.mercurystereo.com/mobile/mobileguide.html' }} style={{flex: 1}} />
+        {/*<WebView source={{ uri: 'https://www.mercurystereo.com/mobile/mobileguide.html' }} style={{flex: 1}} />*/}
 
 
     </SafeAreaView>
