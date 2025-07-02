@@ -45,11 +45,9 @@ const BackArrow = () => {
 
 const calculateTime = (time) => {
 	let totalTime = time/60;
-	console.log(totalTime);
 	let mins = Math.floor(totalTime);
 	let seconds = totalTime % 1;
 	seconds = seconds.toFixed(2)
-	console.log("secs" + seconds);
 	if(seconds >= 0.60){
 		mins+=1;
 		seconds-=.60;
@@ -59,7 +57,6 @@ const calculateTime = (time) => {
 		return mins;
 	}
 	else{
-		console.log(seconds);
 		seconds = seconds.toString();
 		seconds = seconds.substring(2);
 		let final = `${mins}:${seconds}`;
