@@ -1,6 +1,7 @@
 // See README.md for information about this file and how to make updates
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // navigation imports -- see the README for links to more information about these
 import {NavigationContainer} from '@react-navigation/native';
@@ -12,7 +13,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import * as Device from 'expo-device';
 
 // not using most of these but I'm scared to get rid of them
-import { StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, Platform, StatusBar} from 'react-native';
+import { StyleSheet, Text, View, Button, Image, Pressable, Platform, StatusBar} from 'react-native';
 
 // screen imports
 import ReciprocityScreen from './screens/reciprocityCalculator';

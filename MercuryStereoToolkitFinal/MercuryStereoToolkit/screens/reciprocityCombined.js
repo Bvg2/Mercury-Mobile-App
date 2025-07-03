@@ -1,7 +1,9 @@
 // See README.md for information about this file and how to make updates
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import { Platform, StyleSheet, View , Text, SafeAreaView, Pressable, Image, TextInput, Button, ScrollView } from 'react-native';
+import { Platform, StyleSheet, View , Text, Pressable, Image, TextInput, Button, ScrollView } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
@@ -208,7 +210,7 @@ const CombinedReciprocityScreen = ({route}) => {
 
     return (
       <SafeAreaView style={[(timerEnd == false) ? reciprocityStyle.containerRegular : reciprocityStyle.containerTimerEnd]}>
-        {Platform.OS === 'android' ? <Pressable style={reciprocityStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+        {Platform.OS === 'ios' ? <Pressable style={reciprocityStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 			<BackArrow/>
         </Pressable> : null}
         <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })} contentContainerStyle={{paddingBottom: 60}}>
@@ -362,7 +364,7 @@ const reciprocityStyle = StyleSheet.create({
       flex: 1,
       backgroundColor: 'black',
       justifyContent: 'top',
-
+      marginTop:60,
     },
     containerTimerEnd: {
       flex: 1,

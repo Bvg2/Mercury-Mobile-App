@@ -1,9 +1,11 @@
 // See README.md for information about this file and how to make updates
 
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
-import { Platform, StyleSheet, Text, View, Button, SafeAreaView, Image, Pressable, Linking, Alert} from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, Image, Pressable, Linking, Alert} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 
 const mercuryStereoURL = 'https://www.mercurystereo.com';
@@ -61,7 +63,7 @@ const AboutScreen = () => {
 
     return(
         <SafeAreaView style={aboutStyle.container}>
-            {Platform.OS === 'android' ? <Pressable style={aboutStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+            {Platform.OS === 'ios' ? <Pressable style={aboutStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 				<BackArrow/>
             </Pressable> : null}
             <Text style={aboutStyle.text} accessible={true} accessibilityLabel='App designed by Emmanuelle Brent & Ben Gradeck' accessibilityRole='text'>App designed by Emmanuelle Brent & Ben Gradeck</Text>
@@ -93,7 +95,7 @@ const aboutStyle = StyleSheet.create({
     // background of the page
     container: {
       flex: 1,
-
+      marginTop:60,
       backgroundColor: 'black',
       justifyContent: 'start',
     },

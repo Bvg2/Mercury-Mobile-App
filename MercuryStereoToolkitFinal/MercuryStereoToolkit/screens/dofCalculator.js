@@ -5,7 +5,9 @@
 // ALSO HAVE CALRIFY ABOUT USING THE BASE DURING HYPERFOCAL CALCULATION FOR LENSES WITHOUT SPACERS
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import { Platform, StyleSheet, View , Text, Image, Pressable, SafeAreaView, Button, ScrollView } from 'react-native';
+import { Platform, StyleSheet, View , Text, Image, Pressable, Button, ScrollView } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list'; 
@@ -545,7 +547,7 @@ const DOFScreen = ({route}) => {
     // The return statement contains the contents displayed on the screen that the user interacts with  
     return(
       <SafeAreaView style={dofStyle.container}>
-        {Platform.OS === 'android' ? <Pressable style={dofStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+        {Platform.OS === 'ios' ? <Pressable style={dofStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 			<BackArrow/>
         </Pressable> : null}
         <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })} contentContainerStyle={{paddingBottom: 60}}>
@@ -705,6 +707,7 @@ const dofStyle = StyleSheet.create({
       flex: 1,
       backgroundColor: 'black',
       justifyContent: 'tops',
+      marginTop:60,
     },
     backArrow: {
 		color: 'white',

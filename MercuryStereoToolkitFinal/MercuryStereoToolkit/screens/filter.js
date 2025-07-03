@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import { StyleSheet, View , Text, Image, SafeAreaView, Pressable, Button, TextInput, ScrollView, Platform} from 'react-native';
+import { StyleSheet, View , Text, Image, Pressable, Button, TextInput, ScrollView, Platform} from 'react-native';
 
 // Special imports for this file, see README for links with more information about them
 import { SelectList } from 'react-native-dropdown-select-list';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 
 
@@ -76,7 +78,7 @@ const FilterScreen = () => {
 	return(
 		<SafeAreaView style={filterStyle.container}>
 
-		{Platform.OS === 'android' ? <Pressable style={filterStyle.backArrow} onPress={() => navigation.navigate("Home")}>
+		{Platform.OS === 'ios' ? <Pressable style={filterStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 			<BackArrow/>
         </Pressable> : null}
 
@@ -152,6 +154,7 @@ const filterStyle = StyleSheet.create({
 		flex: 1,
 		backgroundColor: 'black',
 		justifyContent: 'tops',
+		marginTop:60,
 
 	},
 	textTitle: {

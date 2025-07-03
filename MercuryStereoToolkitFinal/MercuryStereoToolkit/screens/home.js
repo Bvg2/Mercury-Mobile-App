@@ -1,8 +1,9 @@
 // See README.md for information about this file and how to make updates
 
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
-import { StyleSheet, Modal, Text, View, Button, SafeAreaView, Image, Pressable, ScrollView, Linking} from 'react-native';
+import { StyleSheet, Modal, Text, View, Button, Image, Pressable, ScrollView, Linking} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 //link to external Mercury Stereo User Guide
@@ -208,6 +209,7 @@ const HomeScreen = ({navigation}) => {
       flexDirection: 'row',
       backgroundColor: 'black',
       justifyContent: 'tops',
+
     },
     // Main title
     textTitle: {
