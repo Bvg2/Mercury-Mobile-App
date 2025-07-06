@@ -150,7 +150,7 @@ const aboutStyle = StyleSheet.create({
     },
     backArrow: {
 		color: 'white',
-		marginTop: 60,
+		marginTop: 0,
 		margin: 10,
 
 	},

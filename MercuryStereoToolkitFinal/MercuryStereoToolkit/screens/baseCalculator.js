@@ -275,8 +275,7 @@ const BaseScreen = () => {
             {/*Use KeyboardAware because there are some text inputs where the keyboard would otherwise cover the input */}
             <KeyboardAwareScrollView 
                 ref={endRef} 
-                onContentSizeChange={() => {if(showResults) {endRef.current.scrollToEnd({ animated: true })}}} 
-                enableOnAndroid={true} 
+                enableOnAndroid={true}
                 enableAutomaticScroll={(Platform.OS === 'ios')}
                 extraScrollHeight={100} // (when scroll)to have extra height between keyboard and text input 
                 extraHeight={80} // make some height so the keyboard wont cover other component
@@ -413,7 +412,7 @@ const baseStyle = StyleSheet.create({
     },
 	backArrow: {
 		color: 'white',
-		marginTop: 60,
+		marginTop: 0,
 		margin: 10,
 	},
     textResult: {

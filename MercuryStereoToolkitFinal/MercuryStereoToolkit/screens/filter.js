@@ -84,7 +84,7 @@ const FilterScreen = () => {
 
 		<KeyboardAwareScrollView
             ref={endRef}
-            onContentSizeChange={() => {if(showResults) {endRef.current.scrollToEnd({ animated: true })}}}
+
             enableOnAndroid={true}
             enableAutomaticScroll={(Platform.OS === 'ios')}
             extraScrollHeight={100} // (when scroll)to have extra height between keyboard and text input
@@ -167,7 +167,7 @@ const filterStyle = StyleSheet.create({
 	},
 	backArrow: {
 		color: 'white',
-		marginTop: 60,
+		marginTop: 0,
 		margin: 10,
 	},
 	input: {

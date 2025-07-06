@@ -209,11 +209,11 @@ const CombinedReciprocityScreen = ({route}) => {
 
 
     return (
-      <SafeAreaView style={[(timerEnd == false) ? reciprocityStyle.containerRegular : reciprocityStyle.containerTimerEnd]}>
+      <SafeAreaView style={reciprocityStyle.containerRegular}>
         {Platform.OS === 'ios' ? <Pressable style={reciprocityStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 			<BackArrow/>
         </Pressable> : null}
-        <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })} contentContainerStyle={{paddingBottom: 60}}>
+        <ScrollView ref={endRef}  contentContainerStyle={{paddingBottom: 60}}>
             
             {/*Title*/}
             {selectedIndex == 0 ? (<Text style={reciprocityStyle.textTitle} accessible={true} accessibilityLabel="Pinhole" accessibilityRole="text">Pinhole</Text>) : null}
@@ -363,7 +363,7 @@ const reciprocityStyle = StyleSheet.create({
     containerRegular: {
       flex: 1,
       backgroundColor: 'black',
-      justifyContent: 'top',
+      justifyContent: 'tops',
       marginTop:60,
     },
     containerTimerEnd: {
@@ -373,7 +373,7 @@ const reciprocityStyle = StyleSheet.create({
     },
     backArrow: {
 		color: 'white',
-		marginTop: 60,
+		marginTop: 0,
 		margin: 10,
 	},
     contentBlock: {

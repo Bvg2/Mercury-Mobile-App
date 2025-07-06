@@ -270,7 +270,7 @@ const CloseFocusScreen = () => {
 				<BackArrow/>
             </Pressable> : null}
             {/*Use KeyboardAware because there are some text inputs where the keyboard would otherwise cover the input */}
-            <KeyboardAwareScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })} contentContainerStyle={{paddingBottom: 60}}>
+            <KeyboardAwareScrollView ref={endRef} contentContainerStyle={{paddingBottom: 60}}>
 
                 {/*Page title*/}
                 <Text style={closeFocusStyle.textTitle} accessible={true} accessibilityLabel="Depth range (close up)" accessibilityRole="text">Depth Range (Close Up)</Text>
@@ -363,7 +363,7 @@ const closeFocusStyle = StyleSheet.create({
         },
     backArrow: {
 		color: 'white',
-		marginTop: 60,
+		marginTop: 0,
 		margin: 10,
 	},
     text: {

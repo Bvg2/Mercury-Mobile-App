@@ -550,7 +550,7 @@ const DOFScreen = ({route}) => {
         {Platform.OS === 'ios' ? <Pressable style={dofStyle.backArrow} onPress={() => navigation.navigate("Home")}>
 			<BackArrow/>
         </Pressable> : null}
-        <ScrollView ref={endRef} onContentSizeChange={() => endRef.current.scrollToEnd({ animated: true })} contentContainerStyle={{paddingBottom: 60}}>
+        <ScrollView ref={endRef} contentContainerStyle={{paddingBottom: 60}}>
           {/*Page titles -- the one displayed depends on the value of the state variable controlled by the segmented control tab*/}
           {selectedIndex == 1 ? (<Text style={dofStyle.textTitle} accessible={true} accessibilityLabel="Depth of field" accessibilityRole="text">Depth of Field</Text>) : null}
           {selectedIndex == 0 ? (<Text style={dofStyle.textTitle} accessible={true} accessibilityLabel="Hyperfocal" accessibilityRole="text">Hyperfocal</Text>) : null}
@@ -711,7 +711,7 @@ const dofStyle = StyleSheet.create({
     },
     backArrow: {
 		color: 'white',
-		marginTop: 60,
+		marginTop: 0,
 		margin: 10,
 	},
     // Title text of page

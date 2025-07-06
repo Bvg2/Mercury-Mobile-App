@@ -240,7 +240,7 @@ const HomeScreen = ({navigation}) => {
 	    padding: 25,
 	    paddingVertical: 5,
 	    width: '75%',
-	    height: '45%',
+	    height: '55%',
 
 	    shadowColor: '#ffff',
 	    shadowOffset: {
