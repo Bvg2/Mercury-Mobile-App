@@ -240,7 +240,7 @@ const HomeScreen = ({navigation}) => {
 	    padding: 25,
 	    paddingVertical: 5,
 	    width: '75%',
-	    height: '55%',
+	    height: '65%',
 
 	    shadowColor: '#ffff',
 	    shadowOffset: {
@@ -272,7 +272,7 @@ const HomeScreen = ({navigation}) => {
       margin: 20,
       borderRadius: 10,
       height: 50,
-      width: '85%',
+      width: '90%',
       alignSelf: 'center',
       display: 'flex',
       justifyContent: 'center',
