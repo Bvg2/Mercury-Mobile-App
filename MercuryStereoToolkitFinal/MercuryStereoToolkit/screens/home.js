@@ -13,7 +13,7 @@ const userGuideURL = 'https://www.mercurystereo.com/mobile/mobileguide.html';
 const descriptions = [
 	"Use this tool to Calculate the hyperfocal configuration for a given lens on a Mercury Stereo camera",
 	"This tool calculates the Depth of field calculations for all Mercury lens and spacer combinations",
-	"Use this tool when you can restrict the visible distance range in your image. Enter the farthest visible object, and this will calculate the closest possible subject that will produce a 'legal' (comfortably viewable) stereo photo. The f-stop displayed will keep this entire range in sharp focus, but that's optional.",
+	"Use this tool when you can restrict the visible distance range in your image. Enter the farthest visible object, and this will calculate the closest subject that will produce a comfortably viewable stereo photo. The f-stop displayed will keep this entire range in sharp focus",
 	"This tool calculates the ideal base distance (distance between the stereo lenses) depending on the distance to your subject(s). This is for medium format 6x6 photography. Use it for very close and very distant subjects.",
 	"Meter for f/22. Select your pinhole size, film stock, and the exposure time your meter calculates, and we will calculate your actual exposure time (taking into account your pinhole and film reciprocity).",
 	"When shooting long exposures(over 1 second), use this calculator to convert your metered exposure to the actual exposure time required by your film stock",
@@ -63,10 +63,10 @@ const HomeScreen = ({navigation}) => {
                 <View style={homeStyle.modalView}>
 					<Pressable
                         onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style={{margin: 15, color: 'white', fontSize: 25, textAlign: 'right', alignItems:'right', justifyContent:'right'}}>x</Text>
+                        <Text style={{margin: 10, color: 'white', fontSize: 25, textAlign: 'right', alignItems:'right', justifyContent:'right'}}>x</Text>
                     </Pressable>
-                    <Text style={[homeStyle.textTitle, {marginTop:0, marginBottom:10}]}>{modalTitle}</Text>
-                    <Text style={[homeStyle.text, {fontSize: 20, color:'#e8e8e8'}]}>{modalData}</Text>
+                    <Text style={[homeStyle.modalTextTitle, { marginTop:0, marginBottom:8}]}>{modalTitle}</Text>
+                    <Text style={[homeStyle.text, {fontSize: 18, color:'#e8e8e8'}]}>{modalData}</Text>
 				</View>
 			</View>
 
@@ -220,6 +220,14 @@ const HomeScreen = ({navigation}) => {
       textAlign: 'center',
       fontWeight: 'bold',
       },
+    modalTextTitle: {
+      color: 'white',
+      marginTop: 10,
+      margin: 5,
+      fontSize: 25,
+      textAlign: 'center',
+      },
+
     // Subtitle 
     textSubtitle: {
       color: 'white',
@@ -231,7 +239,7 @@ const HomeScreen = ({navigation}) => {
     modalView: {
 	    margin: 20,
 	    textAlign: 'center',
-	    justifyContent: 'center',
+	    justifyContent: 'tops',
 	    alignSelf: 'center',
 	    backgroundColor: 'black',
 	    borderRadius: 20,
