@@ -316,7 +316,7 @@ const CombinedReciprocityScreen = ({route}) => {
 
             
           {/*Results text*/}
-            {result ? (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time: {calculateTime(reciprocityTime)} minutes</Text>) : null}
+            {result ? (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time: {calculateTime(reciprocityTime)}</Text>) : null}
 
       {/*
           {/*Countdown timer
@@ -400,7 +400,7 @@ const reciprocityStyle = StyleSheet.create({
       alignSelf: 'flex-start',
     },
     timerText: {
-      color: 'white',
+      color: 'red',
       margin: 20,
       marginTop: 40,
       fontSize: 20,

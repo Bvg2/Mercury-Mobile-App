@@ -4,12 +4,12 @@
     "slug": "MercuryStereoToolkit",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/mercuryLogoWhiteOnBlack.png",
+    "icon": "./assets/images/mercSymbol.png",
     "scheme": "mercurystereotoolkit",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/mercuryLogoWhiteOnBlack.png",
-      "resizeMode": "cover",
+      "image": "./assets/images/mercSymbol.png",
+      "imageWidth": 200,
       "backgroundColor": "#000000"
     },
     "newArchEnabled": true,
@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/mercuryLogoWhiteOnBlack.png",
+        "foregroundImage": "./assets/images/mercSymbolIcon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -38,7 +38,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/mercSymbol.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
