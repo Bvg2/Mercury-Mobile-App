@@ -1,4 +1,4 @@
-package com.mercurycamera.MercuryStereoToolkit
+package com.mercurycamera.MercuryStereoToolkitLite
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

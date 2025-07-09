@@ -1,4 +1,4 @@
-package com.mercurycamera.MercuryStereoToolkit
+package com.mercurycamera.MercuryStereoToolkitLite
 
 import android.app.Application
 import android.content.res.Configuration
