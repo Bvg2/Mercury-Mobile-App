@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "MercuryStereoToolkit",
-    "slug": "MercuryStereoToolkit",
+    "slug": "MercuryStereoToolkitLite",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/mercSymbol.png",
