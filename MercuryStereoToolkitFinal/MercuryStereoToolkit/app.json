@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MercuryStereoToolkit",
-    "slug": "MercuryStereoToolkit",
+    "name": "MercuryStereoToolkitlite",
+    "slug": "MercuryStereoToolkitLite",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/mercSymbol.png",
@@ -15,7 +15,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mercurycamera.MercuryStereoToolkit",
+      "bundleIdentifier": "com.mercurycamera.MercuryStereoToolkitLite",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -26,7 +26,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.mercurycamera.MercuryStereoToolkit"
+      "package": "com.mercurycamera.MercuryStereoToolkitLite"
     },
     "web": {
       "bundler": "metro",
