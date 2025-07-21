@@ -26,7 +26,24 @@ const filmStock = [
     {key: '7', value: 'Kodak TMAX'},
     {key: '8', value: 'Ilford HP5+, XP2, Pan F'},
     {key: '9', value: 'Ilford FP4+, Delta 100'},
-    {key: '10', value: 'Ilford Delta 400'}
+    {key: '10', value: 'Ilford Delta 400'},
+    {key: '11', value: 'Instax'}
+];
+
+const shutterSpeeds = [
+	{key: '1', value: '1'},
+	{key: '2', value: '2'},
+	{key: '3', value: '4'},
+	{key: '4', value: '8'},
+	{key: '5', value: '10'},
+	{key: '6', value: '15'},
+	{key: '7', value: '30'},
+	{key: '8', value: '50'},
+	{key: '9', value: '60'},
+	{key: '10', value: '125'},
+	{key: '11', value: '250'},
+	{key: '12', value: '500'},
+	{key: '13', value: '1000'},
 ];
 
 // Array/dictionary of key value pairs for different pinhole sizes, used in dropdown menu
@@ -47,8 +64,10 @@ const BackArrow = () => {
 
 const calculateTime = (time) => {
 	let totalTime = time/60;
+	console.log(totalTime);
 	let mins = Math.floor(totalTime);
 	let seconds = totalTime % 1;
+	console.log(seconds);
 	seconds = seconds.toFixed(2)
 	if(seconds >= 0.60){
 		mins+=1;
@@ -64,6 +83,7 @@ const calculateTime = (time) => {
 		let final = `${mins}:${seconds}`;
 
 
+
 		return final
 	}
 
@@ -71,7 +91,7 @@ const calculateTime = (time) => {
 }
 
 // Global variable which stores the calculated reciprocity time, based on the selected film stock
-var reciprocityTime = 0;
+let reciprocityTime = 0;
 // Separate global variable which is used to pass the calculated reicprocity time to the timer... honestly I don't remember by just using reciprocityTime wasn't working, but it wasn't for some reason so idk
 //var timerTime = 0;
 
@@ -85,6 +105,7 @@ const CombinedReciprocityScreen = ({route}) => {
     const [selectedIndex, setSelectedIndex] = useState(route.params.tab);     // Stores which segmented-control tab is selected to display pinhole or reciprocity. Default value is passed in from navigation from the home screen to load the correct tab
     const [selectedPinholeSize, setSelectedPinholeSize] = useState(''); // Selected pinhole size
     const [selectedFilm, setSelectedFilm] = useState(''); // Selected film stock
+    const [selectedShutterSpeed, setSelectedShutterSpeed] = useState(null);
     const [time, onChangeTime] = useState('');            // The time entered by users in the textbox
     const [result, showResult] = useState(false);         // Boolean value for whether or not to display results
     const [updateResult, setUpdateResult] = useState(0);  // Value to increment to ensure that the screen is displayed with the most up-to-date data
@@ -109,9 +130,19 @@ const CombinedReciprocityScreen = ({route}) => {
       setUpdateResult(updateResult + 1);
       //setPlayTimer(false);
       //setTimerEnd(false);
+      if(selectedShutterSpeed != null){
+        console.log("this is the shutter speed" + selectedShutterSpeed);
+        seconds = 1/selectedShutterSpeed;
+        console.log(reciprocityTime);
+
+
+      }
+      else{
+        console.log("shutterSpeeds is null");
+        seconds = parseFloat(seconds);
+      }
 
       // take user input (string number) and make it a number to be used for calculations
-      seconds = parseFloat(seconds);
 
       // additional calculation that needs to be done if on the Pinhole tab, otherwise just use the entered time
       if (selectedIndex == 0){
@@ -129,6 +160,14 @@ const CombinedReciprocityScreen = ({route}) => {
       // based on the selected film stock and time length, apply the correct formula to calculate the reciprocity time
       if (film.localeCompare('Color negative') == 0){
         reciprocityTime = seconds ** 1.35;
+      }
+      else if (film.localeCompare('Instax') == 0){
+        if(seconds >= 0.125){
+			reciprocityTime = seconds ** 2;
+        }
+        else{
+            reciprocityTime = seconds ** 1.35;
+        }
       }
       else if (film.localeCompare('Fuji Provia F (RDP III)') == 0){
         reciprocityTime = seconds;
@@ -285,9 +324,28 @@ const CombinedReciprocityScreen = ({route}) => {
               accessibilityHint="A searchable drop down menu to select a film stock option"
             />
 
+            {selectedIndex == 0 ? (<Text style={reciprocityStyle.titleText} accessible={true} accessibilityLabel="Select film stock" accessibilityRole="text">Enter a Shutter Speed or Time</Text>) : null}
+            {selectedIndex == 0 ?
+            (<View style={reciprocityStyle.contentBlock}>
+            <Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="Enter time in seconds" accessibilityRole="text">Shutter Speed:</Text>
+            <SelectList
+              setSelected={(val) => setSelectedShutterSpeed(val)} // updates state variable
+              data={shutterSpeeds}
+              save="value"
+              placeholder="select speed"
+              boxStyles={{marginBottom:0}}
+              dropdownTextStyles={{color:'white'}}
+              inputStyles={{color:'white'}}
+              onSelect = {() => setTimerEnd(false)}
+              accessible={true}
+              accessibilityHint="A searchable drop down menu to select a film stock option"
+            />
+
+          </View>) : null }
+
           {/*Numeric text input for users to input a time to calculate reciprocity for */}
           <View style={reciprocityStyle.contentBlock}>
-            <Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="Enter time in seconds" accessibilityRole="text">Enter time:</Text>
+            <Text style={reciprocityStyle.text} accessible={true} accessibilityLabel="Enter time in seconds" accessibilityRole="text">Time:</Text>
             <TextInput
               style={reciprocityStyle.input}
               onChangeText={onChangeTime}
@@ -316,7 +374,7 @@ const CombinedReciprocityScreen = ({route}) => {
 
             
           {/*Results text*/}
-            {result ? (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time: {calculateTime(reciprocityTime)}</Text>) : null}
+            {result ? (<Text style={reciprocityStyle.timerText} accessible={true} accessibilityLabel="Calculated reciprocity time" accessibilityRole="text">Reciprocity time: {calculateTime(reciprocityTime)} (min:sec)</Text>) : null}
 
       {/*
           {/*Countdown timer
@@ -396,6 +454,14 @@ const reciprocityStyle = StyleSheet.create({
       margin: 8,
       marginTop: 13,
       fontSize: 20,
+      textAlign: 'left',
+      alignSelf: 'flex-start',
+    },
+    titleText: {
+      color: "#e3e3e3e3",
+      margin: 2,
+      marginTop: 15,
+      fontSize: 22,
       textAlign: 'left',
       alignSelf: 'flex-start',
     },

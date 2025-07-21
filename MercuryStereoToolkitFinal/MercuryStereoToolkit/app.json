@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/mercSymbol.png",
-    "scheme": "mercurystereotoolkit",
+    "scheme": "mercurystereotoolkitlite",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/mercSymbol.png",
@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/mercSymbolIcon.png",
+        "foregroundImage": "./assets/images/androidIconFinal.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,

@@ -137,7 +137,7 @@ const FilterScreen = () => {
             </View>
 
 
-            {result ? <Text style={[filterStyle.text, {fontSize: 30}]}>ISO after Filter: {result}</Text> : null}
+            {result ? <Text style={[filterStyle.textResult, {fontSize: 30}]}>ISO after Filter: {result}</Text> : null}
 
 
 
@@ -193,6 +193,14 @@ const filterStyle = StyleSheet.create({
       fontSize: 20,
       textAlign: 'left',
       alignSelf: 'flex-start',
+    },
+    textResult: {
+      color: 'red',
+      margin: 8,
+      marginTop: 13,
+      fontSize: 20,
+      textAlign: 'center',
+      alignSelf: 'center',
     },
     description: {
       color: 'white',
