@@ -42,8 +42,6 @@ const shutterSpeeds = [
 	{key: '9', value: '60'},
 	{key: '10', value: '125'},
 	{key: '11', value: '250'},
-	{key: '12', value: '500'},
-	{key: '13', value: '1000'},
 ];
 
 // Array/dictionary of key value pairs for different pinhole sizes, used in dropdown menu
@@ -164,7 +162,7 @@ const CombinedReciprocityScreen = ({route}) => {
       }
       else if (film.localeCompare('Instax') == 0){
         if(seconds >= 0.125){
-			reciprocityTime = seconds ** 2;
+			reciprocityTime = seconds ** 2.2;
         }
         else{
             reciprocityTime = seconds ** 1.35;
