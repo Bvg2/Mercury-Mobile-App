@@ -159,6 +159,7 @@ const DOFScreen = ({route}) => {
     const [recalculateOptions, setRecalculateOptions] = useState(0);          // Because state variables are asynchronous, sometimes it gets an update behind. This variable is incremented each time we want to "force" the screen to re-render with the most up-to-date information
     const [showDOFResult, setShowDOFResult] = useState(false);                // If DOF is being calculated, this is set to true to display the correct result fields
     const [showHyperfocalResult, setShowHyperfocalResult] = useState(false);  // If hyperfocal is being calculated, this is set to true to display the correct result fields
+    const [useMeters, setUseMeters] = useState(false);                        //changes the selection of feet vs meters
 
     // Custom function to update which tab is being displayed and clear the results whenever the tab is switched
     const handleSingleIndexSelect = (index) => {
@@ -301,6 +302,7 @@ const DOFScreen = ({route}) => {
         }
       }
       else {  // selectedIndex == 0
+      //ISSUEDETECTED
         let hyperfocalArray = hyperfocal.split(' - ');
 
         // if the results are in meters and the selected units is feet
@@ -428,8 +430,8 @@ const DOFScreen = ({route}) => {
       setShowDOFResult(true);
       setShowHyperfocalResult(false);
       setRecalculateOptions(recalculateOptions + 1);
-      setSelectedUnits("feet");
-      displayUnits = "feet";
+      //setSelectedUnits("feet");
+      //displayUnits = selectedUnits;
 
 
       // Local variables to use in the calculation because state variables are read-only so sometimes the code doesn't like you using them
@@ -474,6 +476,70 @@ const DOFScreen = ({route}) => {
       f22Response = f22Array[overallIndex];
       f16Response = f16Array[overallIndex];
       f8Response = f8Array[overallIndex];
+
+      if(selectedUnits === 'meters'){
+        let f22ResultArray = f22Response.split(' - ');
+        let f16ResultArray = f16Response.split(' - ');
+        let f8ResultArray = f8Response.split(' - ');
+        let workingVal1;
+        let workingVal2;
+        if(!isNaN(subjectDistResponse)){
+            workingVal1 = parseFloat(subjectDistResponse) / 3.281;
+            subjectDistResponse = workingVal1.toFixed(1);
+          }
+
+          /* For the f-stop DOF ranges, the closer value will always be a number and can be converted directly.
+             For the farther value, check if it is a number and if so then convert it.
+             Then recombine the values into the response string.
+          */
+
+          // convert the near and far f-22 values to meters and round to one decimal place, then recombine the segments into the response string
+          workingVal1 = parseFloat(f22ResultArray[0]) / 3.281;
+          workingVal1 = workingVal1.toFixed(1);
+
+          if(!isNaN(f22ResultArray[1])){
+            workingVal2 = parseFloat(f22ResultArray[1]) / 3.281;
+            workingVal2 = workingVal2.toFixed(1);
+
+            f22Response = workingVal1 + ' - ' + workingVal2;
+          }
+          else {
+            f22Response = workingVal1 + ' - INF';
+          }
+
+
+          // convert the near and far f-16 values to meters and round to one decimal place, then recombine the segments into the response string
+          workingVal1 = parseFloat(f16ResultArray[0]) / 3.281;
+          workingVal1 = workingVal1.toFixed(1);
+
+          if(!isNaN(f16ResultArray[1])){
+            workingVal2 = parseFloat(f16ResultArray[1]) / 3.281;
+            workingVal2 = workingVal2.toFixed(1);
+
+            f16Response = workingVal1 + ' - ' + workingVal2;
+          }
+          else {
+            f16Response = workingVal1 + ' - INF';
+          }
+
+
+          // convert the near and far f-8 values to meters and round to one decimal place, then recombine the segments into the response string
+          workingVal1 = parseFloat(f8ResultArray[0]) / 3.281;
+          workingVal1 = workingVal1.toFixed(1);
+
+          if(!isNaN(f8ResultArray[1])){
+            workingVal2 = parseFloat(f8ResultArray[1]) / 3.281;
+            workingVal2 = workingVal2.toFixed(1);
+
+            f8Response = workingVal1 + ' - ' + workingVal2;
+          }
+          else {
+            f8Response = workingVal1 + ' - INF';
+          }
+
+
+      }
+
   
     }
   
@@ -484,8 +550,10 @@ const DOFScreen = ({route}) => {
       setShowDOFResult(false);
       setShowHyperfocalResult(true);
       setRecalculateOptions(recalculateOptions + 1);
-      setSelectedUnits("feet");
-      displayUnits = "feet";
+      //ISSUEDETECTED()
+      //setSelectedUnits("feet");
+      //displayUnits = 'feet'
+
   
       // Local variables for calculating results so that sate variables aren't being messed with 
       let lensVal = selectedLens;
@@ -539,6 +607,21 @@ const DOFScreen = ({route}) => {
             hyperfocalBase = baseArray[i];
           }
         }
+      }
+      if(selectedUnits === 'meters'){
+      let hyperfocalArray = hyperfocal.split(' - ');
+
+        // if the results are in meters and the selected units is feet
+
+        // results are in feet and the new unit is meters
+        displayUnits = "meters";
+
+		// convert the near hyperfocal distance to meters and round to one decimal place, then recombine string in hyperfocal response
+		let workingVal1 = parseFloat(hyperfocalArray[0]) / 3.281;
+		workingVal1 = workingVal1.toFixed(1);
+
+		hyperfocal = workingVal1 + ' - INF';
+
       }
   
     }
@@ -694,7 +777,7 @@ const DOFScreen = ({route}) => {
 
         </ScrollView>
       </SafeAreaView>
-    )
+    );
     
 
 }

@@ -105,10 +105,11 @@ const CombinedReciprocityScreen = ({route}) => {
     const [selectedIndex, setSelectedIndex] = useState(route.params.tab);     // Stores which segmented-control tab is selected to display pinhole or reciprocity. Default value is passed in from navigation from the home screen to load the correct tab
     const [selectedPinholeSize, setSelectedPinholeSize] = useState(''); // Selected pinhole size
     const [selectedFilm, setSelectedFilm] = useState(''); // Selected film stock
-    const [selectedShutterSpeed, setSelectedShutterSpeed] = useState(null);
+    const [selectedShutterSpeed, setSelectedShutterSpeed] = useState('');
     const [time, onChangeTime] = useState('');            // The time entered by users in the textbox
     const [result, showResult] = useState(false);         // Boolean value for whether or not to display results
     const [updateResult, setUpdateResult] = useState(0);  // Value to increment to ensure that the screen is displayed with the most up-to-date data
+    const [dropdownKey, setDropdownKey] = useState(0); // ✅ Used to force re-render
     //const [key, setKey] = React.useState(0);                    // Variable which allows the countdown timer to be restarted at any point
     //const [playTimer, setPlayTimer] = React.useState(false);    // Boolean value which controls whether the countdown timer is playing or not
     const [timerEnd, setTimerEnd] = useState(false);      // Boolean variable to track whether the countdown timer has completed counting down (determines when sound plays and screen color turns red)
@@ -130,7 +131,7 @@ const CombinedReciprocityScreen = ({route}) => {
       setUpdateResult(updateResult + 1);
       //setPlayTimer(false);
       //setTimerEnd(false);
-      if(selectedShutterSpeed != null){
+      if(selectedShutterSpeed != null && selectedIndex === 0){
         console.log("this is the shutter speed" + selectedShutterSpeed);
         seconds = 1/selectedShutterSpeed;
         console.log(reciprocityTime);
@@ -212,7 +213,15 @@ const CombinedReciprocityScreen = ({route}) => {
       }
 
       // Round the reciprocity time to one decimal point
+
       reciprocityTime = reciprocityTime.toFixed(1);
+	  setSelectedShutterSpeed(null)
+	  onChangeTime(0);
+
+	  setDropdownKey(prev => prev + 1);
+
+
+
       // Assign the reciprocity time to the timerTime variable for use by the countdown timer
       //timerTime = parseFloat(reciprocityTime);
     }
@@ -331,6 +340,8 @@ const CombinedReciprocityScreen = ({route}) => {
             <SelectList
               setSelected={(val) => setSelectedShutterSpeed(val)} // updates state variable
               data={shutterSpeeds}
+              key={dropdownKey}
+              value={selectedShutterSpeed}
               save="value"
               placeholder="select speed"
               boxStyles={{marginBottom:0}}
@@ -338,7 +349,7 @@ const CombinedReciprocityScreen = ({route}) => {
               inputStyles={{color:'white'}}
               onSelect = {() => setTimerEnd(false)}
               accessible={true}
-              accessibilityHint="A searchable drop down menu to select a film stock option"
+              accessibilityHint="A searchable drop down menu to select a shutterspeed option"
             />
 
           </View>) : null }
