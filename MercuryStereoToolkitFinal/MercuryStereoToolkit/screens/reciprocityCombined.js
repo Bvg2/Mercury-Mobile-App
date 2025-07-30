@@ -61,11 +61,16 @@ const BackArrow = () => {
 }
 
 const calculateTime = (time) => {
+	if(time<60){
+		//if its less than a minute don't calculate anything else
+		return time;
+	}
+	//console.log("time " + time)
 	let totalTime = time/60;
-	console.log(totalTime);
+	//console.log("total time " + totalTime);
 	let mins = Math.floor(totalTime);
 	let seconds = totalTime % 1;
-	console.log(seconds);
+	//console.log("seconds " + seconds);
 	seconds = seconds.toFixed(2)
 	if(seconds >= 0.60){
 		mins+=1;
@@ -159,13 +164,16 @@ const CombinedReciprocityScreen = ({route}) => {
       // based on the selected film stock and time length, apply the correct formula to calculate the reciprocity time
       if (film.localeCompare('Color negative') == 0){
         reciprocityTime = seconds ** 1.35;
+        console.log("colornegative " + reciprocityTime);
       }
       else if (film.localeCompare('Instax') == 0){
         if(seconds >= 0.125){
 			reciprocityTime = seconds ** 2.2;
+			console.log("instax greater than .125 " + reciprocityTime);
         }
         else{
             reciprocityTime = seconds ** 1.35;
+            console.log("instax less than .125 " + reciprocityTime);
         }
       }
       else if (film.localeCompare('Fuji Provia F (RDP III)') == 0){
@@ -366,7 +374,6 @@ const CombinedReciprocityScreen = ({route}) => {
               keyboardType='decimal-pad'
               enterKeyHint='done'
               returnKeyType='done'
-              onSubmitEditing={() => calculatePinhole(selectedPinholeSize, selectedFilm, time)}
               accessible={true}
               accessibilityLabel="Text entry box to enter a time in seconds"
             /> 
